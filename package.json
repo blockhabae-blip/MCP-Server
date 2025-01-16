@@ -1,0 +1,62 @@
+{
+  "name": "@apify/mcp-server",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Model Context Protocol Server for Apify Actors",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "apify-mcp-server": "dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apify/actor-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apify/actor-mcp-server/issues"
+  },
+  "homepage": "https://apify.com/apify/mcp-server",
+  "keywords": [
+    "apify",
+    "mcp",
+    "server",
+    "actors",
+    "model context protocol"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.1.1",
+    "ajv": "^8.17.1",
+    "apify": "^3.2.6",
+    "apify-client": "^2.11.1",
+    "express": "^4.21.2",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.33.1",
+    "@anthropic-ai/tokenizer": "^0.0.4",
+    "@apify/eslint-config": "^0.5.0-beta.2",
+    "@apify/tsconfig": "^0.1.0",
+    "@types/express": "^4.0.0",
+    "@types/minimist": "^1.2.5",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.17.0",
+    "eventsource": "^3.0.2",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.18.2"
+  },
+  "scripts": {
+    "start": "npm run start:dev",
+    "start:prod": "node dist/main.js",
+    "start:dev": "tsx src/main.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "tsc",
+    "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+    "watch": "tsc --watch"
+  },
+  "author": "Apify",
+  "license": "MIT"
+}
