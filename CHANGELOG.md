@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - MCP server implementation ([#1](https://github.com/apify/actors-mcp-server/pull/1)) ([5e2c9f0](https://github.com/apify/actors-mcp-server/commit/5e2c9f06008304257c887dc3c67eb9ddfd32d6cd)) by [@jirispilka](https://github.com/jirispilka)
 
+### 🐛 Bug Fixes
+
+- Update express routes to correctly handle GET and HEAD requests, fix CI ([#5](https://github.com/apify/actors-mcp-server/pull/5)) ([ec6e9b0](https://github.com/apify/actors-mcp-server/commit/ec6e9b0a4657f673b3650a5906fe00e66411d7f1)) by [@jirispilka](https://github.com/jirispilka)
+
 
 <!-- git-cliff-unreleased-end -->
 This changelog summarizes all changes of the Apify Model Context Protocol Server
