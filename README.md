@@ -1,5 +1,7 @@
 # Apify Model Context Protocol (MCP) Server
 
+[![Actors MCP Server](https://apify.com/actor-badge?actor=apify/actors-mcp-server)](https://apify.com/apify/actors-mcp-server)
+
 Implementation of an MCP server for all [Apify Actors](https://apify.com/store).
 This server enables interaction with one or more Apify Actors that can be defined in the MCP Server configuration.
 
@@ -99,7 +101,7 @@ You can find a list of all available Actors in the [Apify Store](https://apify.c
 
 Once the server is running, you can interact with Server-Sent Events (SSE) to send messages to the server and receive responses.
 You can use MCP clients such as [Superinference.ai](https://superinterface.ai/) or [LibreChat](https://www.librechat.ai/).
-([Claude Desktop](https://claude.ai/download) does not support SSE transport yet)
+([Claude Desktop](https://claude.ai/download) does not support SSE transport yet, see [Claude Desktop Configuration](#claude-desktop) section for more details).
 
 In the client settings you need to provide server configuration:
 ```json
@@ -195,10 +197,10 @@ Configure Claude Desktop to recognize the MCP server.
 
     ```text
     "mcpServers": {
-      "apify": {
+      "actors-mcp-server": {
         "command": "npx",
         "args": [
-          "/path/to/actor-mcp-server/dist/index.js"
+          "@apify/actors-mcp-server"
         ]
         "env": {
            "APIFY_TOKEN": "your-apify-token"
@@ -209,10 +211,10 @@ Configure Claude Desktop to recognize the MCP server.
     Alternatively, you can use the following command to select one or more Apify Actors:
     ```text
     "mcpServers": {
-      "apify-mcp-server": {
+      "actors-mcp-server": {
         "command": "npx",
         "args": [
-          "/path/to/actor-mcp-server/dist/index.js",
+          "@apify/actors-mcp-serve",
           "--actors",
           "lukaskrivka/google-maps-with-contact-details,apify/instagram-scraper"
         ]
