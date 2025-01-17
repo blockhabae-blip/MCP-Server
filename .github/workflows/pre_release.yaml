@@ -40,7 +40,7 @@ jobs:
                     wait-interval: 5
 
     update_changelog:
-        needs: [ release_metadata ]
+        needs: [ release_metadata, wait_for_checks ]
         name: Update changelog
         runs-on: ubuntu-latest
         outputs:
@@ -77,7 +77,7 @@ jobs:
 
     publish_to_npm:
         name: Publish to NPM
-        needs: [ release_metadata ]
+        needs: [ release_metadata, wait_for_checks ]
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
                     npm install
             - # Check version consistency and increment pre-release version number for beta only.
                 name: Bump pre-release version
-                run: node ./.github/scripts/before-beta-release.js
+                run: node ./.github/scripts/before-beta-release.cjs
             -   name: Publish to NPM
                 run: npm publish --tag beta
 
