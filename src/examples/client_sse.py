@@ -34,13 +34,18 @@ async def run() -> None:
 
             tools = await session.list_tools()
             print("Available Tools:", tools, end="\n\n")
+            for tool in tools.tools:
+                print(f"\n### Tool name ###: {tool.name}")
+                print(f"\tdescription: {tool.description}")
+                print(f"\tinputSchema: {tool.inputSchema}")
 
             if hasattr(tools, "tools") and not tools.tools:
                 print("No tools available!")
                 return
 
+            print("\n\nCall tool")
             result = await session.call_tool("apify/rag-web-browser", { "query": "example.com", "maxResults": 3 })
-            print("Tools Call Result:")
+            print("Tools call result:")
 
             for content in result.content:
                 print(content)

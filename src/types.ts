@@ -1,5 +1,5 @@
 import type { ValidateFunction } from 'ajv';
-import type { ActorDefinition } from 'apify-client';
+import type { ActorDefaultRunOptions, ActorDefinition } from 'apify-client';
 
 export type Input = {
     actors: string[] | string;
@@ -9,6 +9,7 @@ export type Input = {
 
 export interface ActorDefinitionWithDesc extends ActorDefinition {
     description: string;
+    defaultRunOptions: ActorDefaultRunOptions
 }
 
 export interface Tool {
@@ -17,4 +18,15 @@ export interface Tool {
     description: string;
     inputSchema: object;
     ajvValidate: ValidateFunction;
+    memoryMbytes: number;
+}
+
+export interface SchemaProperties {
+    title: string;
+    description: string;
+    enum: string[]; // Array of string options for the enum
+    enumTitles: string[]; // Array of string titles for the enum
+    type: string; // Data type (e.g., "string")
+    default: string;
+    prefill: string;
 }
