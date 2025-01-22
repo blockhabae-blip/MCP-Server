@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
-- Add log to stdio ([99a3e9e](https://github.com/apify/actors-mcp-server/commit/99a3e9e8a4fbf52806dd900b9543431d6a1bc083))
+- Add log to stdio ([#25](https://github.com/apify/actors-mcp-server/pull/25)) ([b6e58cd](https://github.com/apify/actors-mcp-server/commit/b6e58cd79f36cfcca1f51b843b5af7ae8e519935)) by [@jirispilka](https://github.com/jirispilka)
 
 
 <!-- git-cliff-unreleased-end -->
