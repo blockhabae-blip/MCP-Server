@@ -61,7 +61,7 @@ app.route(Routes.ROOT)
             return;
         }
         try {
-            log.info(`Received GET message at: ${req.url}`);
+            log.info(`Received GET message at: ${Routes.ROOT}`);
             await processParamsAndUpdateTools(req.url);
             res.status(200).json({ message: `Actor is using Model Context Protocol. ${HELP_MESSAGE}` }).end();
         } catch (error) {
@@ -76,7 +76,7 @@ app.route(Routes.ROOT)
 app.route(Routes.SSE)
     .get(async (req: Request, res: Response) => {
         try {
-            log.info(`Received GET message at: ${req.url}`);
+            log.info(`Received GET message at: ${Routes.SSE}`);
             await processParamsAndUpdateTools(req.url);
             transport = new SSEServerTransport(Routes.MESSAGE, res);
             await mcpServer.connect(transport);
@@ -89,7 +89,7 @@ app.route(Routes.SSE)
 app.route(Routes.MESSAGE)
     .post(async (req: Request, res: Response) => {
         try {
-            log.info(`Received POST message at: ${req.url}`);
+            log.info(`Received POST message at: ${Routes.MESSAGE}`);
             if (transport) {
                 await transport.handlePostMessage(req, res);
             } else {
