@@ -1,6 +1,7 @@
 # Apify Model Context Protocol (MCP) Server
 
 [![Actors MCP Server](https://apify.com/actor-badge?actor=apify/actors-mcp-server)](https://apify.com/apify/actors-mcp-server)
+[![smithery badge](https://smithery.ai/badge/@apify/actors-mcp-server)](https://smithery.ai/server/@apify/actors-mcp-server)
 
 Implementation of an MCP server for all [Apify Actors](https://apify.com/store).
 This server enables interaction with one or more Apify Actors that can be defined in the MCP Server configuration.
@@ -197,8 +198,9 @@ Alternatively, you can use simple python [client_see.py](https://github.com/apif
     ```
 
 ## ⾕ MCP Server at a local host
-
+``
 You can run the Apify MCP Server on your local machine by configuring it with Claude Desktop or any other [MCP clients](https://modelcontextprotocol.io/clients).
+You can also use [Smithery](https://smithery.ai/server/@apify/actors-mcp-server) to install the server automatically.
 
 ### Prerequisites
 
@@ -290,6 +292,14 @@ To configure Claude Desktop to work with the MCP server, follow these steps. For
     Find top 10 best Italian restaurants in San Francisco.
     Find and analyze instagram profile of the Rock.
     ```
+
+### Installing via Smithery
+
+To install Apify Actors MCP Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@apify/actors-mcp-server):
+
+```bash
+npx -y @smithery/cli install @apify/actors-mcp-server --client claude
+```
 
 #### Stdio clients
 
