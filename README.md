@@ -96,7 +96,7 @@ The server provides a set of helper tools to discover available Actors and retri
 - `get-actor-details`: Retrieves documentation, input schema, and details about a specific Actor.
 - `discover-actors`: Searches for relevant Actors using keywords and returns their details.
 
-There are also tools to manage the available tools list. However, dynamically adding and removing tools requires the MCP client to have the capability to manage the tools list, which is typically not supported.
+There are also tools to manage the available tools list. However, dynamically adding and removing tools requires the MCP client to have the capability to update tools list (handle `ToolListChangedNotificationSchema`), which is typically not supported.
 
 You can try this functionality using the [Apify Tester MCP Client](https://apify.com/jiri.spilka/tester-mcp-client) Actor.
 To enable it, set the `enableActorAutoLoading` parameter.
@@ -393,3 +393,4 @@ If you need other features or have any feedback, [submit an issue](https://conso
 - [What is MCP and why does it matter?](https://blog.apify.com/what-is-model-context-protocol/)
 - [Tester MCP Client](https://apify.com/jiri.spilka/tester-mcp-client)
 - [AI agent workflow: building an agent to query Apify datasets](https://blog.apify.com/ai-agent-workflow/)
+- [MCP Client development guide](https://github.com/cyanheads/model-context-protocol-resources/blob/main/guides/mcp-client-development-guide.md)

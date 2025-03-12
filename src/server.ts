@@ -12,12 +12,10 @@ import { ApifyClient } from 'apify-client';
 import type { AxiosRequestConfig } from 'axios';
 
 import {
-    actorNameToToolName,
     filterSchemaProperties,
     getActorDefinition,
     getActorsAsTools,
     shortenProperties,
-    toolNameToActorName,
 } from './actors.js';
 import {
     ACTOR_OUTPUT_MAX_CHARS_PER_ITEM,
@@ -53,7 +51,7 @@ export class ApifyMcpServer {
             },
             {
                 capabilities: {
-                    tools: {},
+                    tools: { listChanged: true },
                 },
             },
         );
@@ -91,7 +89,7 @@ export class ApifyMcpServer {
         input: unknown,
         callOptions: ActorCallOptions | undefined = undefined,
     ): Promise<object[]> {
-        const name = toolNameToActorName(actorName);
+        const name = actorName;
         try {
             log.info(`Calling actor ${name} with input: ${JSON.stringify(input)}`);
 
@@ -117,6 +115,7 @@ export class ApifyMcpServer {
     public async addToolsFromActors(actors: string[]) {
         const tools = await getActorsAsTools(actors);
         this.updateTools(tools);
+        return tools;
     }
 
     public async addToolsFromDefaultActors() {
@@ -126,10 +125,14 @@ export class ApifyMcpServer {
     public updateTools(tools: Tool[]): void {
         for (const tool of tools) {
             this.tools.set(tool.name, tool);
-            log.info(`Added/Updated tool: ${tool.name}`);
+            log.info(`Added/Updated tool: ${tool.actorFullName} (tool: ${tool.name})`);
         }
     }
 
+    /**
+     * Returns an array of tool names.
+     * @returns {string[]} - An array of tool names.
+     */
     public getToolNames(): string[] {
         return Array.from(this.tools.keys());
     }
@@ -157,8 +160,7 @@ export class ApifyMcpServer {
         this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
             const { name, arguments: args } = request.params;
 
-            // Anthropic can't handle '/' in tool names. The replace is only necessary when calling the tool from stdio clients.
-            const tool = this.tools.get(name) || this.tools.get(actorNameToToolName(name));
+            const tool = Array.from(this.tools.values()).find((t) => t.name === name || t.actorFullName === name);
             if (!tool) {
                 throw new Error(`Unknown tool: ${name}`);
             }
@@ -174,12 +176,14 @@ export class ApifyMcpServer {
                 switch (name) {
                     case InternalTools.ADD_ACTOR_TO_TOOLS: {
                         const parsed = AddActorToToolsArgsSchema.parse(args);
-                        await this.addToolsFromActors([parsed.actorFullName]);
-                        return { content: [{ type: 'text', text: `Actor ${parsed.actorFullName} was added to tools` }] };
+                        const toolsAdded = await this.addToolsFromActors([parsed.actorName]);
+                        await this.server.notification({ method: 'notifications/tools/list_changed' });
+                        return { content: [{ type: 'text', text: `Actor added: ${toolsAdded.map((t) => `${t.actorFullName} (tool name: ${t.name})`).join(', ')}` }] };
                     }
                     case InternalTools.REMOVE_ACTOR_FROM_TOOLS: {
                         const parsed = RemoveActorToolArgsSchema.parse(args);
                         this.tools.delete(parsed.toolName);
+                        await this.server.notification({ method: 'notifications/tools/list_changed' });
                         return { content: [{ type: 'text', text: `Tool ${parsed.toolName} was removed` }] };
                     }
                     case InternalTools.DISCOVER_ACTORS: {
@@ -193,7 +197,7 @@ export class ApifyMcpServer {
                     }
                     case InternalTools.GET_ACTOR_DETAILS: {
                         const parsed = GetActorDefinition.parse(args);
-                        const v = await getActorDefinition(parsed.actorFullName);
+                        const v = await getActorDefinition(parsed.actorName, parsed.limit);
                         if (v && v.input && 'properties' in v.input && v.input) {
                             const properties = filterSchemaProperties(v.input.properties as { [key: string]: SchemaProperties });
                             v.input.properties = shortenProperties(properties);
