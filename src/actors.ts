@@ -1,7 +1,7 @@
 import { Ajv } from 'ajv';
 import { ApifyClient } from 'apify-client';
 
-import { ACTOR_ADDITIONAL_INSTRUCTIONS, defaults, MAX_DESCRIPTION_LENGTH, ACTOR_README_MAX_LENGTH } from './const.js';
+import { ACTOR_ADDITIONAL_INSTRUCTIONS, defaults, MAX_DESCRIPTION_LENGTH, ACTOR_README_MAX_LENGTH, ACTOR_ENUM_MAX_LENGTH } from './const.js';
 import { log } from './logger.js';
 import type { ActorDefinitionPruned, ActorDefinitionWithDesc, IActorInputSchema, ISchemaProperties, Tool } from './types.js';
 
@@ -78,7 +78,23 @@ function pruneActorDefinition(response: ActorDefinitionWithDesc): ActorDefinitio
 }
 
 /**
- * Shortens the description and enum values of schema properties.
+ * Helper function to shorten the enum list if it is too long.
+ *
+ * @param {string[]} enumList - The list of enum values to be shortened.
+ * @returns {string[] | undefined} - The shortened enum list or undefined if the list is too long.
+ */
+export function shortenEnum(enumList: string[]): string[] | undefined {
+    let charCount = 0;
+    const resultEnumList = enumList.filter((enumValue) => {
+        charCount += enumValue.length;
+        return charCount <= ACTOR_ENUM_MAX_LENGTH;
+    });
+
+    return resultEnumList.length > 0 ? resultEnumList : undefined;
+}
+
+/**
+ * Shortens the description, enum, and items.enum properties of the schema properties.
  * @param properties
  */
 export function shortenProperties(properties: { [key: string]: ISchemaProperties}): { [key: string]: ISchemaProperties } {
@@ -86,7 +102,16 @@ export function shortenProperties(properties: { [key: string]: ISchemaProperties
         if (property.description.length > MAX_DESCRIPTION_LENGTH) {
             property.description = `${property.description.slice(0, MAX_DESCRIPTION_LENGTH)}...`;
         }
+
+        if (property.enum && property.enum?.length > 0) {
+            property.enum = shortenEnum(property.enum);
+        }
+
+        if (property.items?.enum && property.items.enum.length > 0) {
+            property.items.enum = shortenEnum(property.items.enum);
+        }
     }
+
     return properties;
 }
 
@@ -282,7 +307,7 @@ function buildNestedProperties(properties: Record<string, ISchemaProperties>): R
  * Tool name can't contain /, so it is replaced with _
  *
  * The input schema processing workflow:
- * 1. Properties are marked as required using markInputPropertiesAsRequired()
+ * 1. Properties are marked as required using markInputPropertiesAsRequired() to add "REQUIRED" prefix to descriptions
  * 2. Nested properties are built by analyzing editor type (proxy, requestListSources) using buildNestedProperties()
  * 3. Properties are filtered using filterSchemaProperties()
  * 4. Properties are shortened using shortenProperties()
@@ -298,11 +323,11 @@ export async function getActorsAsTools(actors: string[]): Promise<Tool[]> {
     for (const result of results) {
         if (result) {
             if (result.input && 'properties' in result.input && result.input) {
-                const propertiesMarkedAsRequired = markInputPropertiesAsRequired(result.input);
-                const propertiesObjectsBuilt = buildNestedProperties(propertiesMarkedAsRequired);
-                const propertiesFiltered = filterSchemaProperties(propertiesObjectsBuilt);
-                const propertiesShortened = shortenProperties(propertiesFiltered);
-                result.input.properties = addEnumsToDescriptionsWithExamples(propertiesShortened);
+                result.input.properties = markInputPropertiesAsRequired(result.input);
+                result.input.properties = buildNestedProperties(result.input.properties);
+                result.input.properties = filterSchemaProperties(result.input.properties);
+                result.input.properties = shortenProperties(result.input.properties);
+                result.input.properties = addEnumsToDescriptionsWithExamples(result.input.properties);
             }
             try {
                 const memoryMbytes = result.defaultRunOptions?.memoryMbytes || defaults.maxMemoryMbytes;
