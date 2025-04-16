@@ -7,7 +7,8 @@ import type { ActorCallOptions } from 'apify-client';
 import type { Request, Response } from 'express';
 import express from 'express';
 
-import { HEADER_READINESS_PROBE, Routes } from './const.js';
+import { getActorsAsTools } from './actors.js';
+import { defaults, HEADER_READINESS_PROBE, Routes } from './const.js';
 import { processInput } from './input.js';
 import { log } from './logger.js';
 import { ApifyMcpServer } from './server.js';
@@ -144,6 +145,10 @@ if (STANDBY_MODE) {
     if (input.enableAddingActors) {
         mcpServer.updateTools(getActorAutoLoadingTools());
     }
+    const actors = input.actors ?? defaults.actors;
+    const actorsToLoad = Array.isArray(actors) ? actors : actors.split(',');
+    const actorTools = await getActorsAsTools(actorsToLoad);
+    mcpServer.updateTools(actorTools);
     app.listen(PORT, () => {
         log.info(`The Actor web server is listening for user requests at ${HOST}`);
     });
