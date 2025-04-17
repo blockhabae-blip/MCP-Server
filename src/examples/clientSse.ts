@@ -6,16 +6,17 @@
  * It requires the `APIFY_TOKEN` in the `.env` file.
  */
 
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js';
-import dotenv from 'dotenv';
-import { EventSource } from 'eventsource';
+import dotenv from 'dotenv'; // eslint-disable-line import/no-extraneous-dependencies
+import type { EventSourceInit } from 'eventsource';
+import { EventSource } from 'eventsource'; // eslint-disable-line import/no-extraneous-dependencies
 
-import { actorNameToToolName } from '../actors.js';
+import { actorNameToToolName } from '../tools/utils.js';
 
 const REQUEST_TIMEOUT = 120_000; // 2 minutes
 const filename = fileURLToPath(import.meta.url);
@@ -23,18 +24,32 @@ const dirname = path.dirname(filename);
 
 dotenv.config({ path: path.resolve(dirname, '../../.env') });
 
-const SERVER_URL = 'https://actors-mcp-server.apify.actor/sse';
+const SERVER_URL = process.env.MCP_SERVER_URL_BASE || 'https://actors-mcp-server.apify.actor/sse';
 // We need to change forward slash / to underscore -- in the tool name as Anthropic does not allow forward slashes in the tool name
 const SELECTED_TOOL = actorNameToToolName('apify/rag-web-browser');
-const QUERY = 'web browser for Anthropic';
+// const QUERY = 'web browser for Anthropic';
+const QUERY = 'apify';
 
 if (!process.env.APIFY_TOKEN) {
     console.error('APIFY_TOKEN is required but not set in the environment variables.');
     process.exit(1);
 }
 
+// Declare EventSource on globalThis if not available (needed for Node.js environment)
+declare global {
+
+    // eslint-disable-next-line no-var, vars-on-top
+    var EventSource: {
+        new(url: string, eventSourceInitDict?: EventSourceInit): EventSource;
+        prototype: EventSource;
+        CONNECTING: 0;
+        OPEN: 1;
+        CLOSED: 2;
+    };
+}
+
 if (typeof globalThis.EventSource === 'undefined') {
-    globalThis.EventSource = EventSource as unknown as typeof globalThis.EventSource;
+    globalThis.EventSource = EventSource;
 }
 
 async function main(): Promise<void> {
@@ -94,10 +109,11 @@ async function main(): Promise<void> {
     } catch (error: unknown) {
         if (error instanceof Error) {
             console.error('Error:', error.message);
-            console.error(error.stack);
         } else {
             console.error('An unknown error occurred:', error);
         }
+    } finally {
+        await client.close();
     }
 }
 
