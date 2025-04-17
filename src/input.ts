@@ -1,4 +1,8 @@
-import { log } from './logger.js';
+/*
+ * Actor input processing.
+ */
+import log from '@apify/log';
+
 import type { Input } from './types.js';
 
 /**
@@ -6,7 +10,7 @@ import type { Input } from './types.js';
  * @param originalInput
  * @returns input
  */
-export async function processInput(originalInput: Partial<Input>): Promise<Input> {
+export function processInput(originalInput: Partial<Input>): Input {
     const input = originalInput as Input;
 
     // actors can be a string or an array of strings
@@ -15,14 +19,15 @@ export async function processInput(originalInput: Partial<Input>): Promise<Input
     }
 
     // enableAddingActors is deprecated, use enableActorAutoLoading instead
-    if (input.enableActorAutoLoading !== undefined && input.enableAddingActors === undefined) {
-        log.warning('enableActorAutoLoading is deprecated, use enableAddingActors instead');
-        input.enableAddingActors = input.enableActorAutoLoading;
+    if (input.enableAddingActors === undefined) {
+        if (input.enableActorAutoLoading !== undefined) {
+            log.warning('enableActorAutoLoading is deprecated, use enableAddingActors instead');
+            input.enableAddingActors = input.enableActorAutoLoading === true || input.enableActorAutoLoading === 'true';
+        } else {
+            input.enableAddingActors = false;
+        }
+    } else {
+        input.enableAddingActors = input.enableAddingActors === true || input.enableAddingActors === 'true';
     }
-
-    if (!input.enableAddingActors) {
-        input.enableAddingActors = false;
-    }
-
     return input;
 }

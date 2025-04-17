@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { processInput } from '../src/input.js';
 import type { Input } from '../src/types.js';
@@ -8,7 +8,7 @@ describe('processInput', () => {
         const input: Partial<Input> = {
             actors: 'actor1, actor2,actor3',
         };
-        const processed = await processInput(input);
+        const processed = processInput(input);
         expect(processed.actors).toEqual(['actor1', 'actor2', 'actor3']);
     });
 
@@ -16,7 +16,7 @@ describe('processInput', () => {
         const input: Partial<Input> = {
             actors: ['actor1', 'actor2', 'actor3'],
         };
-        const processed = await processInput(input);
+        const processed = processInput(input);
         expect(processed.actors).toEqual(['actor1', 'actor2', 'actor3']);
     });
 
@@ -25,7 +25,7 @@ describe('processInput', () => {
             actors: ['actor1'],
             enableActorAutoLoading: true,
         };
-        const processed = await processInput(input);
+        const processed = processInput(input);
         expect(processed.enableAddingActors).toBe(true);
     });
 
@@ -35,7 +35,7 @@ describe('processInput', () => {
             enableActorAutoLoading: true,
             enableAddingActors: false,
         };
-        const processed = await processInput(input);
+        const processed = processInput(input);
         expect(processed.enableAddingActors).toBe(false);
     });
 
@@ -43,7 +43,7 @@ describe('processInput', () => {
         const input: Partial<Input> = {
             actors: ['actor1'],
         };
-        const processed = await processInput(input);
+        const processed = processInput(input);
         expect(processed.enableAddingActors).toBe(false);
     });
 });
