@@ -5,7 +5,7 @@
 import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
-import { CallToolRequestSchema, CallToolResultSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, CallToolResultSchema, ErrorCode, ListToolsRequestSchema, McpError } from '@modelcontextprotocol/sdk/types.js';
 import type { ActorCallOptions } from 'apify-client';
 
 import log from '@apify/log';
@@ -160,7 +160,6 @@ export class ActorsMcpServer {
          * @returns {object} - The response object containing the tools.
          */
         this.server.setRequestHandler(ListToolsRequestSchema, async () => {
-            // TODO if there is actor-mcp as a tool, also list the tools from that Actor
             const tools = Array.from(this.tools.values()).map((tool) => (tool.tool));
             return { tools };
         });
@@ -168,7 +167,7 @@ export class ActorsMcpServer {
         /**
          * Handles the request to call a tool.
          * @param {object} request - The request object containing tool name and arguments.
-         * @throws {Error} - Throws an error if the tool is unknown or arguments are invalid.
+         * @throws {McpError} - based on the McpServer class code from the typescript MCP SDK
          */
         this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
             const { name, arguments: args } = request.params;
@@ -179,27 +178,47 @@ export class ActorsMcpServer {
 
             // Validate token
             if (!apifyToken) {
-                throw new Error('APIFY_TOKEN is required but not set in the environment variables or passed as a parameter.');
+                const msg = 'APIFY_TOKEN is required. It must be set in the environment variables or passed as a parameter in the body.';
+                log.error(msg);
+                await this.server.sendLoggingMessage({ level: 'error', data: msg });
+                throw new McpError(
+                    ErrorCode.InvalidParams,
+                    msg,
+                );
             }
 
-            // TODO - log errors
-            // TODO: handle errors better, server.sendLoggingMessage (   )
-            // TODO - do not raise but return mcp errors
             // TODO - if connection is /mcp client will not receive notification on tool change
 
             // Find tool by name or actor full name
             const tool = Array.from(this.tools.values())
                 .find((t) => t.tool.name === name || (t.type === 'actor' && (t.tool as ActorTool).actorFullName === name));
             if (!tool) {
-                await this.server.sendLoggingMessage({ level: 'info', data: `Unknown tool $\{name}, available tools ${this.getToolNames()}` });
-                throw new Error(`Unknown tool: ${name}`);
+                const msg = `Tool ${name} not found. Available tools: ${this.getToolNames().join(', ')}`;
+                log.error(msg);
+                await this.server.sendLoggingMessage({ level: 'error', data: msg });
+                throw new McpError(
+                    ErrorCode.InvalidParams,
+                    msg,
+                );
             }
             if (!args) {
-                throw new Error(`Missing arguments for tool: ${name}`);
+                const msg = `Missing arguments for tool ${name}`;
+                log.error(msg);
+                await this.server.sendLoggingMessage({ level: 'error', data: msg });
+                throw new McpError(
+                    ErrorCode.InvalidParams,
+                    msg,
+                );
             }
             log.info(`Validate arguments for tool: ${tool.tool.name} with arguments: ${JSON.stringify(args)}`);
             if (!tool.tool.ajvValidate(args)) {
-                throw new Error(`Invalid arguments for tool ${tool.tool.name}: args: ${JSON.stringify(args)} error: ${JSON.stringify(tool?.tool.ajvValidate.errors)}`);
+                const msg = `Invalid arguments for tool ${tool.tool.name}: args: ${JSON.stringify(args)} error: ${JSON.stringify(tool?.tool.ajvValidate.errors)}`;
+                log.error(msg);
+                await this.server.sendLoggingMessage({ level: 'error', data: msg });
+                throw new McpError(
+                    ErrorCode.InvalidParams,
+                    msg,
+                );
             }
 
             try {
@@ -253,11 +272,23 @@ export class ActorsMcpServer {
                     return { content };
                 }
             } catch (error) {
-                log.error(`Error calling tool: ${error}`);
-                throw new Error(`Error calling tool: ${error}`);
+                log.error(`Error calling tool ${name}: ${error}`);
+                throw new McpError(
+                    ErrorCode.InternalError,
+                    `An error occurred while calling the tool.`,
+                );
             }
 
-            throw new Error(`Tool ${name} is not implemented`);
+            const msg = `Unknown tool: ${name}`;
+            log.error(msg);
+            await this.server.sendLoggingMessage({
+                level: 'error',
+                data: msg,
+            });
+            throw new McpError(
+                ErrorCode.InvalidParams,
+                msg,
+            );
         });
     }
 
