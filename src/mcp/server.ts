@@ -17,6 +17,7 @@ import {
     SERVER_NAME,
     SERVER_VERSION,
 } from '../const.js';
+import { helpTool } from '../tools/helpers.js';
 import {
     actorDefinitionTool,
     addTool,
@@ -66,7 +67,7 @@ export class ActorsMcpServer {
         this.setupToolHandlers();
 
         // Add default tools
-        this.updateTools([searchTool, actorDefinitionTool]);
+        this.updateTools([searchTool, actorDefinitionTool, helpTool]);
 
         // Add tools to dynamically load Actors
         if (this.options.enableAddingActors) {
@@ -77,6 +78,22 @@ export class ActorsMcpServer {
         this.initialize().catch((error) => {
             log.error('Failed to initialize server:', error);
         });
+    }
+
+    /**
+    * Resets the server to the default state.
+    * This method clears all tools and loads the default tools.
+    * Used primarily for testing purposes.
+    */
+    public async reset(): Promise<void> {
+        this.tools.clear();
+        this.updateTools([searchTool, actorDefinitionTool, helpTool]);
+        if (this.options.enableAddingActors) {
+            this.loadToolsToAddActors();
+        }
+
+        // Initialize automatically for backward compatibility
+        await this.initialize();
     }
 
     /**
@@ -294,5 +311,9 @@ export class ActorsMcpServer {
 
     async connect(transport: Transport): Promise<void> {
         await this.server.connect(transport);
+    }
+
+    async close(): Promise<void> {
+        await this.server.close();
     }
 }
