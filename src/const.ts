@@ -26,16 +26,22 @@ export enum HelperTools {
     ADD_ACTOR = 'add-actor',
     REMOVE_ACTOR = 'remove-actor',
     GET_ACTOR_DETAILS = 'get-actor-details',
+    HELP_TOOL = 'help-tool',
 }
 
 export const defaults = {
     actors: [
-        'apify/instagram-scraper',
         'apify/rag-web-browser',
-        'lukaskrivka/google-maps-with-contact-details',
     ],
-    enableActorAutoLoading: false,
-    maxMemoryMbytes: 4096,
+    helperTools: [
+        HelperTools.SEARCH_ACTORS,
+        HelperTools.GET_ACTOR_DETAILS,
+        HelperTools.HELP_TOOL,
+    ],
+    actorAddingTools: [
+        HelperTools.ADD_ACTOR,
+        HelperTools.REMOVE_ACTOR,
+    ],
 };
 
 export const APIFY_USERNAME = 'apify';
