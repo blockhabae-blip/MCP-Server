@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.1.30 - **not yet released**
+## [0.1.30](https://github.com/apify/actors-mcp-server/releases/tag/v0.1.30) (2025-05-07)
 
 ### 🐛 Bug Fixes
 
@@ -13,7 +12,6 @@ All notable changes to this project will be documented in this file.
 - Update README with a link to a blog post ([#112](https://github.com/apify/actors-mcp-server/pull/112)) ([bfe9286](https://github.com/apify/actors-mcp-server/commit/bfe92861c8f85c4af50d77c94173e4abedca8f57)) by [@jirispilka](https://github.com/jirispilka), closes [#65](https://github.com/apify/actors-mcp-server/issues/65)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.1.29](https://github.com/apify/actors-mcp-server/releases/tag/v0.1.29) (2025-04-29)
 
 ### 🐛 Bug Fixes
