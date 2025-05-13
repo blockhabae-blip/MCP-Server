@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.1.31 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Apify-mcp-server max listeners warning ([#113](https://github.com/apify/actors-mcp-server/pull/113)) ([219f8ee](https://github.com/apify/actors-mcp-server/commit/219f8eeea3174b6cd44af08d563d2f65db23aa3f)) by [@MQ37](https://github.com/MQ37)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.1.30](https://github.com/apify/actors-mcp-server/releases/tag/v0.1.30) (2025-05-07)
 
 ### 🐛 Bug Fixes
