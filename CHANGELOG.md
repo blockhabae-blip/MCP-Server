@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Normal Actor tools cache ([#117](https://github.com/apify/actors-mcp-server/pull/117)) ([1a3ce16](https://github.com/apify/actors-mcp-server/commit/1a3ce16026d44e49fc1b930c03cae2f4631d11ca)) by [@MQ37](https://github.com/MQ37)
+- Tool state handler ([#116](https://github.com/apify/actors-mcp-server/pull/116)) ([681c466](https://github.com/apify/actors-mcp-server/commit/681c466e0f06352fa528e1a56f6bbe93d0207312)) by [@MQ37](https://github.com/MQ37)
 
 ### 🐛 Bug Fixes
 
