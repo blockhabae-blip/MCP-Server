@@ -7,13 +7,18 @@
  *
  * Command-line arguments:
  *   --actors - A comma-separated list of Actor full names to add to the server.
+ *   --help - Display help information
  *
  * Example:
  *   node stdio.js --actors=apify/google-search-scraper,apify/instagram-scraper
  */
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import minimist from 'minimist';
+import yargs from 'yargs';
+// Had to ignore the eslint import extension error for the yargs package.
+// Using .js or /index.js didn't resolve it due to the @types package issues.
+// eslint-disable-next-line import/extensions
+import { hideBin } from 'yargs/helpers';
 
 import log from '@apify/log';
 
@@ -21,23 +26,51 @@ import { defaults } from './const.js';
 import { ActorsMcpServer } from './mcp/server.js';
 import { getActorsAsTools } from './tools/index.js';
 
+// Keeping this interface here and not types.ts since
+// it is only relevant to the CLI/STDIO transport in this file
+/**
+ * Interface for command line arguments
+ */
+interface CliArgs {
+    actors?: string;
+    'enable-adding-actors'?: boolean;
+    enableActorAutoLoading?: boolean;
+}
+
 // Configure logging, set to ERROR
 log.setLevel(log.LEVELS.ERROR);
 
-// Parse command line arguments
-const parser = minimist;
-const argv = parser(process.argv.slice(2), {
-    boolean: [
-        'enable-adding-actors',
-        'enableActorAutoLoading', // deprecated
-    ],
-    string: ['actors'],
-    default: {
-        'enable-adding-actors': false,
-    },
-});
+// Parse command line arguments using yargs
+const argv = yargs(hideBin(process.argv))
+    .usage('Usage: $0 [options]')
+    .option('actors', {
+        type: 'string',
+        describe: 'Comma-separated list of Actor full names to add to the server',
+        example: 'apify/google-search-scraper,apify/instagram-scraper',
+    })
+    .option('enable-adding-actors', {
+        type: 'boolean',
+        default: false,
+        describe: 'Enable dynamically adding Actors as tools based on user requests',
+    })
+    .option('enableActorAutoLoading', {
+        type: 'boolean',
+        default: false,
+        hidden: true,
+        describe: 'Deprecated: use enable-adding-actors instead',
+    })
+    .help('help')
+    .alias('h', 'help')
+    .version(false)
+    .epilogue(
+        'To connect, set your MCP client server command to `npx @apify/actors-mcp-server`'
+        + ' and set the environment variable `APIFY_TOKEN` to your Apify API token.\n',
+    )
+    .epilogue('For more information, visit https://github.com/apify/actors-mcp-server')
+    .parseSync() as CliArgs;
+
 const enableAddingActors = argv['enable-adding-actors'] || argv.enableActorAutoLoading || false;
-const { actors = '' } = argv;
+const actors = argv.actors as string || '';
 const actorList = actors ? actors.split(',').map((a: string) => a.trim()) : [];
 
 // Validate environment
