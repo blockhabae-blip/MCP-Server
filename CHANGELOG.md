@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.1.31 - **not yet released**
+## [0.2.0](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.0) (2025-05-26)
 
 ### 🚀 Features
 
@@ -20,7 +19,6 @@ All notable changes to this project will be documented in this file.
 - Update mcp sdk ([#127](https://github.com/apify/actors-mcp-server/pull/127)) ([eed238e](https://github.com/apify/actors-mcp-server/commit/eed238ed803e3de6fca0338d2b97a25fab0669e7)) by [@MQ37](https://github.com/MQ37), closes [#84](https://github.com/apify/actors-mcp-server/issues/84)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.1.30](https://github.com/apify/actors-mcp-server/releases/tag/v0.1.30) (2025-05-07)
 
 ### 🐛 Bug Fixes
