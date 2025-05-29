@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 <!-- git-cliff-unreleased-start -->
 ## 0.2.2 - **not yet released**
 
+### 🚀 Features
+
+- Update Readme.md with legacy information ([#129](https://github.com/apify/actors-mcp-server/pull/129)) ([0b2b329](https://github.com/apify/actors-mcp-server/commit/0b2b329a7bc2dfc764fcc9a368d813e2d2acce46)) by [@vystrcild](https://github.com/vystrcild)
+
 ### 🐛 Bug Fixes
 
 - Actor add response ([#128](https://github.com/apify/actors-mcp-server/pull/128)) ([8754dd2](https://github.com/apify/actors-mcp-server/commit/8754dd2767581f026048aa58fdc44798711fc4dc)) by [@MQ37](https://github.com/MQ37)
