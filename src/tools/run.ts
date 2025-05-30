@@ -9,11 +9,15 @@ import type { InternalTool, ToolEntry } from '../types.js';
 const ajv = new Ajv({ coerceTypes: 'array', strict: false });
 
 const getActorRunArgs = z.object({
-    runId: z.string().describe('The ID of the Actor run.'),
+    runId: z.string()
+        .min(1)
+        .describe('The ID of the Actor run.'),
 });
 
 const abortRunArgs = z.object({
-    runId: z.string().describe('The ID of the Actor run to abort.'),
+    runId: z.string()
+        .min(1)
+        .describe('The ID of the Actor run to abort.'),
     gracefully: z.boolean().optional().describe('If true, the Actor run will abort gracefully with a 30-second timeout.'),
 });
 
@@ -35,6 +39,9 @@ export const getActorRun: ToolEntry = {
             const parsed = getActorRunArgs.parse(args);
             const client = new ApifyClient({ token: apifyToken });
             const v = await client.run(parsed.runId).get();
+            if (!v) {
+                return { content: [{ type: 'text', text: `Run with ID '${parsed.runId}' not found.` }] };
+            }
             return { content: [{ type: 'text', text: JSON.stringify(v) }] };
         },
     } as InternalTool,

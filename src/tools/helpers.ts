@@ -62,6 +62,7 @@ In that case, the user should check the MCP client documentation to see if the c
 
 export const addToolArgsSchema = z.object({
     actorName: z.string()
+        .min(1)
         .describe('Add a tool, Actor or MCP-Server to available tools by Actor ID or tool full name.'
             + 'Tool name is always composed from `username/name`'),
 });
@@ -79,6 +80,14 @@ export const addTool: ToolEntry = {
         call: async (toolArgs) => {
             const { apifyMcpServer, mcpServer, apifyToken, args } = toolArgs;
             const parsed = addToolArgsSchema.parse(args);
+            if (apifyMcpServer.listAllToolNames().includes(parsed.actorName)) {
+                return {
+                    content: [{
+                        type: 'text',
+                        text: `Actor ${parsed.actorName} is already available. No new tools were added.`,
+                    }],
+                };
+            }
             const tools = await getActorsAsTools([parsed.actorName], apifyToken);
             const toolsAdded = apifyMcpServer.upsertTools(tools, true);
             await mcpServer.notification({ method: 'notifications/tools/list_changed' });
@@ -98,6 +107,7 @@ export const addTool: ToolEntry = {
 };
 export const removeToolArgsSchema = z.object({
     toolName: z.string()
+        .min(1)
         .describe('Tool name to remove from available tools.')
         .transform((val) => actorNameToToolName(val)),
 });
@@ -112,8 +122,19 @@ export const removeTool: ToolEntry = {
         // TODO: I don't like that we are passing apifyMcpServer and mcpServer to the tool
         call: async (toolArgs) => {
             const { apifyMcpServer, mcpServer, args } = toolArgs;
-
             const parsed = removeToolArgsSchema.parse(args);
+            // Check if tool exists before attempting removal
+            if (!apifyMcpServer.tools.has(parsed.toolName)) {
+                // Send notification so client can update its tool list
+                // just in case the client tool list is out of sync
+                await mcpServer.notification({ method: 'notifications/tools/list_changed' });
+                return {
+                    content: [{
+                        type: 'text',
+                        text: `Tool '${parsed.toolName}' not found. No tools were removed.`,
+                    }],
+                };
+            }
             const removedTools = apifyMcpServer.removeToolsByName([parsed.toolName], true);
             await mcpServer.notification({ method: 'notifications/tools/list_changed' });
             return { content: [{ type: 'text', text: `Tools removed: ${removedTools.join(', ')}` }] };

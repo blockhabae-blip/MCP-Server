@@ -10,6 +10,7 @@ const ajv = new Ajv({ coerceTypes: 'array', strict: false });
 
 const getKeyValueStoreArgs = z.object({
     storeId: z.string()
+        .min(1)
         .describe('Key-value store ID or username~store-name'),
 });
 
@@ -38,6 +39,7 @@ export const getKeyValueStore: ToolEntry = {
 
 const getKeyValueStoreKeysArgs = z.object({
     storeId: z.string()
+        .min(1)
         .describe('Key-value store ID or username~store-name'),
     exclusiveStartKey: z.string()
         .optional()
@@ -77,8 +79,10 @@ export const getKeyValueStoreKeys: ToolEntry = {
 
 const getKeyValueStoreRecordArgs = z.object({
     storeId: z.string()
+        .min(1)
         .describe('Key-value store ID or username~store-name'),
     recordKey: z.string()
+        .min(1)
         .describe('Key of the record to retrieve.'),
 });
 
