@@ -225,7 +225,9 @@ export async function getActorsAsTools(
 }
 
 const getActorArgs = z.object({
-    actorId: z.string().describe('Actor ID or a tilde-separated owner\'s username and Actor name.'),
+    actorId: z.string()
+        .min(1)
+        .describe('Actor ID or a tilde-separated owner\'s username and Actor name.'),
 });
 
 /**
@@ -245,10 +247,13 @@ export const getActor: ToolEntry = {
         ajvValidate: ajv.compile(zodToJsonSchema(getActorArgs)),
         call: async (toolArgs) => {
             const { args, apifyToken } = toolArgs;
-            const parsed = getActorArgs.parse(args);
+            const { actorId } = getActorArgs.parse(args);
             const client = new ApifyClient({ token: apifyToken });
             // Get Actor - contains a lot of irrelevant information
-            const actor = await client.actor(parsed.actorId).get();
+            const actor = await client.actor(actorId).get();
+            if (!actor) {
+                return { content: [{ type: 'text', text: `Actor '${actorId}' not found.` }] };
+            }
             return { content: [{ type: 'text', text: JSON.stringify(actor) }] };
         },
     } as InternalTool,

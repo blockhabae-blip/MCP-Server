@@ -9,11 +9,15 @@ import type { InternalTool, ToolEntry } from '../types.js';
 const ajv = new Ajv({ coerceTypes: 'array', strict: false });
 
 const getDatasetArgs = z.object({
-    datasetId: z.string().describe('Dataset ID or username~dataset-name.'),
+    datasetId: z.string()
+        .min(1)
+        .describe('Dataset ID or username~dataset-name.'),
 });
 
 const getDatasetItemsArgs = z.object({
-    datasetId: z.string().describe('Dataset ID or username~dataset-name.'),
+    datasetId: z.string()
+        .min(1)
+        .describe('Dataset ID or username~dataset-name.'),
     clean: z.boolean().optional()
         .describe('If true, returns only non-empty items and skips hidden fields (starting with #). Shortcut for skipHidden=true and skipEmpty=true.'),
     offset: z.number().optional()
@@ -54,6 +58,9 @@ export const getDataset: ToolEntry = {
             const parsed = getDatasetArgs.parse(args);
             const client = new ApifyClient({ token: apifyToken });
             const v = await client.dataset(parsed.datasetId).get();
+            if (!v) {
+                return { content: [{ type: 'text', text: `Dataset '${parsed.datasetId}' not found.` }] };
+            }
             return { content: [{ type: 'text', text: JSON.stringify(v) }] };
         },
     } as InternalTool,
@@ -98,6 +105,9 @@ export const getDatasetItems: ToolEntry = {
                 desc: parsed.desc,
                 flatten,
             });
+            if (!v) {
+                return { content: [{ type: 'text', text: `Dataset '${parsed.datasetId}' not found.` }] };
+            }
             return { content: [{ type: 'text', text: JSON.stringify(v) }] };
         },
     } as InternalTool,
