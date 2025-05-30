@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.2 - **not yet released**
+## [0.2.2](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.2) (2025-05-30)
 
 ### 🚀 Features
 
@@ -15,7 +14,6 @@ All notable changes to this project will be documented in this file.
 - Error and input handling ([#130](https://github.com/apify/actors-mcp-server/pull/130)) ([0b0331c](https://github.com/apify/actors-mcp-server/commit/0b0331cfde11501b528b86b192abb513682cd0cd)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.0](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.0) (2025-05-26)
 
 ### 🚀 Features
