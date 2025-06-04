@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.4 - **not yet released**
+## [0.2.4](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.4) (2025-06-04)
 
 ### 🚀 Features
 
 - Update image in README and fix Actor README ([#134](https://github.com/apify/actors-mcp-server/pull/134)) ([2fcd4c0](https://github.com/apify/actors-mcp-server/commit/2fcd4c00b682f5080d5e57da10a74a3801cb87ee)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.3](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.3) (2025-06-04)
 
 ### 🐛 Bug Fixes
