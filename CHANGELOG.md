@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.3 - **not yet released**
+## [0.2.3](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.3) (2025-06-04)
 
 ### 🐛 Bug Fixes
 
 - Hack tool call from claude-desktop. Claude is using prefix local ([#133](https://github.com/apify/actors-mcp-server/pull/133)) ([4dd3a6d](https://github.com/apify/actors-mcp-server/commit/4dd3a6d135989d9de8c1f4dd4c11c5e1638b4a55)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.2](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.2) (2025-05-30)
 
 ### 🚀 Features
