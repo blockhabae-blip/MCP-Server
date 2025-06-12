@@ -52,6 +52,7 @@ MCP is an open protocol that enables secure, controlled interactions between AI 
 
 For more information, see the [Model Context Protocol](https://modelcontextprotocol.org/) website or the blog post [What is MCP and why does it matter?](https://blog.apify.com/what-is-model-context-protocol/).
 
+
 # 🤖 How is MCP Server related to AI Agents?
 
 The Apify MCP Server exposes Apify's Actors through the MCP protocol, allowing AI Agents or frameworks that implement the MCP protocol to access all Apify Actors as tools for data extraction, web searching, and other tasks.
@@ -234,6 +235,10 @@ To configure Claude Desktop to work with the MCP server, follow these steps. For
     Find the top 10 best Italian restaurants in San Francisco.
     Find and analyze the Instagram profile of The Rock.
     ```
+
+To understand how to set up and run the MCP server on Claude, you can watch this short video tutorial ▷ on YouTube:
+
+[Apify MCP Server Tutorial: Integrate 5,000+ Apify Actors and Agents Into Claude](https://www.youtube.com/watch?v=UOkJm9pTgMw)
 
 #### VS Code
 
