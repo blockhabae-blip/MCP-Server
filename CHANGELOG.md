@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.5 - **not yet released**
+## [0.2.5](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.5) (2025-06-13)
 
 ### 🐛 Bug Fixes
 
 - Ajv compile memory leak ([#139](https://github.com/apify/actors-mcp-server/pull/139)) ([924053e](https://github.com/apify/actors-mcp-server/commit/924053e372ebbb39e4e96ca5abf14bae2b2dfde9)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.4](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.4) (2025-06-04)
 
 ### 🚀 Features
