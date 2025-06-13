@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.2.7 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Explicitly clear resources ([#136](https://github.com/apify/actors-mcp-server/pull/136)) ([779d2ba](https://github.com/apify/actors-mcp-server/commit/779d2ba2407bcd5fbdd89d3201463a784e67c931)) by [@jirispilka](https://github.com/jirispilka)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.2.6](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.6) (2025-06-13)
 
 ### 🐛 Bug Fixes
