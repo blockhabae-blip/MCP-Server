@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.6 - **not yet released**
+## [0.2.6](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.6) (2025-06-13)
 
 ### 🐛 Bug Fixes
 
 - Fixed ajv compile also for MCP proxy tools ([#140](https://github.com/apify/actors-mcp-server/pull/140)) ([5e6e618](https://github.com/apify/actors-mcp-server/commit/5e6e6189984b1cd8bcbbd986d63888810695367a)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.5](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.5) (2025-06-13)
 
 ### 🐛 Bug Fixes
