@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🐛 Bug Fixes
 
 - Explicitly clear resources ([#136](https://github.com/apify/actors-mcp-server/pull/136)) ([779d2ba](https://github.com/apify/actors-mcp-server/commit/779d2ba2407bcd5fbdd89d3201463a784e67c931)) by [@jirispilka](https://github.com/jirispilka)
+- Readme Actors list ([#141](https://github.com/apify/actors-mcp-server/pull/141)) ([dc0a332](https://github.com/apify/actors-mcp-server/commit/dc0a332c8dbe450290d4acb5a19759545edf3c32)) by [@MQ37](https://github.com/MQ37)
 
 
 <!-- git-cliff-unreleased-end -->
