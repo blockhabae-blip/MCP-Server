@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.7 - **not yet released**
+## [0.2.7](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.7) (2025-06-23)
 
 ### 🐛 Bug Fixes
 
@@ -13,7 +12,6 @@ All notable changes to this project will be documented in this file.
 - Disable search for rental Actors ([#142](https://github.com/apify/actors-mcp-server/pull/142)) ([d7bdb9e](https://github.com/apify/actors-mcp-server/commit/d7bdb9e958e5250c7f06b282512e4d98150e24bb)) by [@MQ37](https://github.com/MQ37), closes [#135](https://github.com/apify/actors-mcp-server/issues/135)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.6](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.6) (2025-06-13)
 
 ### 🐛 Bug Fixes
