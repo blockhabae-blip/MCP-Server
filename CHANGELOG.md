@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.2.8 - **not yet released**
+
+### 🚀 Features
+
+- Dynamic actor loading is enabled by default ([#147](https://github.com/apify/actors-mcp-server/pull/147)) ([261e1aa](https://github.com/apify/actors-mcp-server/commit/261e1aa40d88e499121b047fb07f24459fb2b0e1)) by [@MichalKalita](https://github.com/MichalKalita), closes [#144](https://github.com/apify/actors-mcp-server/issues/144)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.2.7](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.7) (2025-06-23)
 
 ### 🐛 Bug Fixes
