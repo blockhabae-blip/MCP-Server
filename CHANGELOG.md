@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.9 - **not yet released**
+## [0.2.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.9) (2025-07-03)
 
 ### 🚀 Features
 
 - Add support for Actorized MCP servers streamable transport. Refactor Actors as a tool adding logic. Update Apify client and SDK and MCP SDK. Refactor standby Actor MCP web server to support multiple concurrent clients. ([#151](https://github.com/apify/actors-mcp-server/pull/151)) ([c2527af](https://github.com/apify/actors-mcp-server/commit/c2527af22fd29adbff74709d50b5eed1a64032b8)) by [@MQ37](https://github.com/MQ37), closes [#89](https://github.com/apify/actors-mcp-server/issues/89), [#100](https://github.com/apify/actors-mcp-server/issues/100), [#118](https://github.com/apify/actors-mcp-server/issues/118)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.8](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.8) (2025-06-24)
 
 ### 🚀 Features
