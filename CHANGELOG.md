@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.2.10 - **not yet released**
+
+### 🚀 Features
+
+- Limit tools to discovery, dynamic Actor management, and help; simplify Actor input schema; return all dataset items at once with only relevant fields in outputs ([#158](https://github.com/apify/actors-mcp-server/pull/158)) ([dd7a924](https://github.com/apify/actors-mcp-server/commit/dd7a924a05373c9afc16b585ef3dd0c0a51dc647)) by [@MQ37](https://github.com/MQ37), closes [#121](https://github.com/apify/actors-mcp-server/issues/121), [#152](https://github.com/apify/actors-mcp-server/issues/152), [#153](https://github.com/apify/actors-mcp-server/issues/153), [#159](https://github.com/apify/actors-mcp-server/issues/159)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.2.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.9) (2025-07-03)
 
 ### 🚀 Features
