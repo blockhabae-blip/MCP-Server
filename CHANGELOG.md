@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Limit tools to discovery, dynamic Actor management, and help; simplify Actor input schema; return all dataset items at once with only relevant fields in outputs ([#158](https://github.com/apify/actors-mcp-server/pull/158)) ([dd7a924](https://github.com/apify/actors-mcp-server/commit/dd7a924a05373c9afc16b585ef3dd0c0a51dc647)) by [@MQ37](https://github.com/MQ37), closes [#121](https://github.com/apify/actors-mcp-server/issues/121), [#152](https://github.com/apify/actors-mcp-server/issues/152), [#153](https://github.com/apify/actors-mcp-server/issues/153), [#159](https://github.com/apify/actors-mcp-server/issues/159)
+- Call-actor tool ([#161](https://github.com/apify/actors-mcp-server/pull/161)) ([7d00f9d](https://github.com/apify/actors-mcp-server/commit/7d00f9d3cf78e10a68e9d976783e8463099a407a)) by [@MichalKalita](https://github.com/MichalKalita), closes [#155](https://github.com/apify/actors-mcp-server/issues/155)
 
 
 <!-- git-cliff-unreleased-end -->
