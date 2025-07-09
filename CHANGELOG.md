@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.2.11 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Improve generic actor-call tool and hide it behind beta flag ([#164](https://github.com/apify/actors-mcp-server/pull/164)) ([fea5336](https://github.com/apify/actors-mcp-server/commit/fea5336a8cef337e339f7cf0a248c5e52e121635)) by [@MQ37](https://github.com/MQ37)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.2.10](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.10) (2025-07-09)
 
 ### 🚀 Features
