@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.10 - **not yet released**
+## [0.2.10](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.10) (2025-07-09)
 
 ### 🚀 Features
 
@@ -16,7 +15,6 @@ All notable changes to this project will be documented in this file.
 - Proxy&#x2F;actor mcp server notifications ([#163](https://github.com/apify/actors-mcp-server/pull/163)) ([7c0e613](https://github.com/apify/actors-mcp-server/commit/7c0e6138ef1a25af746f07a3c5730298d121d029)) by [@MQ37](https://github.com/MQ37), closes [#154](https://github.com/apify/actors-mcp-server/issues/154)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.9) (2025-07-03)
 
 ### 🚀 Features
