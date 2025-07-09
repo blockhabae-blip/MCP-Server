@@ -34,6 +34,8 @@ export enum HelperTools {
     KEY_VALUE_STORE_RECORD_GET = 'get-key-value-store-record',
     APIFY_MCP_HELP_TOOL = 'apify-actor-help-tool',
     STORE_SEARCH = 'search-actors',
+    DOCS_SEARCH = 'search-apify-docs',
+    DOCS_FETCH = 'fetch-apify-docs',
 }
 
 export const defaults = {
@@ -49,8 +51,11 @@ export const ACTOR_OUTPUT_TRUNCATED_MESSAGE = `Output was truncated because it w
 
 export const ACTOR_ADDITIONAL_INSTRUCTIONS = 'Never call/execute tool/Actor unless confirmed by the user.';
 
+// Cache
 export const ACTOR_CACHE_MAX_SIZE = 500;
 export const ACTOR_CACHE_TTL_SECS = 30 * 60; // 30 minutes
+export const APIFY_DOCS_CACHE_MAX_SIZE = 500;
+export const APIFY_DOCS_CACHE_TTL_SECS = 60 * 60; // 1 hour
 
 export const ACTOR_PRICING_MODEL = {
     /** Rental actors */
@@ -69,3 +74,9 @@ export const ACTOR_PRICING_MODEL = {
 export const ACTOR_SEARCH_ABOVE_LIMIT = 50;
 
 export const MCP_STREAMABLE_ENDPOINT = '/mcp';
+
+export const ALGOLIA = {
+    appId: 'N8EOCSBQGH',
+    apiKey: 'e97714a64e2b4b8b8fe0b01cd8592870', // search only (public) API key
+    indexName: 'test_test_apify_sdk',
+};
