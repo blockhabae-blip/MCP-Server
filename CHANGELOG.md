@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.2.13 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Actor tool input schema, docs search normalized query ([#168](https://github.com/apify/actors-mcp-server/pull/168)) ([01de757](https://github.com/apify/actors-mcp-server/commit/01de7578cc2276b820410b56a3fb55dc00cb146f)) by [@MQ37](https://github.com/MQ37)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.2.12](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.12) (2025-07-09)
 
 ### 🐛 Bug Fixes
