@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.2.14 - **not yet released**
+## [0.2.14](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.14) (2025-07-17)
 
 ### 🚀 Features
 
@@ -14,7 +13,6 @@ All notable changes to this project will be documented in this file.
 - Encode Actor input fields containing dots ([#170](https://github.com/apify/actors-mcp-server/pull/170)) ([8dbdc7b](https://github.com/apify/actors-mcp-server/commit/8dbdc7b53da50137fd118631404312c71d8f4381)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.13](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.13) (2025-07-15)
 
 ### 🐛 Bug Fixes
