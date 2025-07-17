@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 <!-- git-cliff-unreleased-start -->
 ## 0.2.14 - **not yet released**
 
+### 🚀 Features
+
+- Add tool selection by feature param ([#172](https://github.com/apify/actors-mcp-server/pull/172)) ([f3b2e4f](https://github.com/apify/actors-mcp-server/commit/f3b2e4f1d204ab01cd0783bbc9930bfc2f84a539)) by [@MQ37](https://github.com/MQ37), closes [#166](https://github.com/apify/actors-mcp-server/issues/166)
+
 ### 🐛 Bug Fixes
 
 - Encode Actor input fields containing dots ([#170](https://github.com/apify/actors-mcp-server/pull/170)) ([8dbdc7b](https://github.com/apify/actors-mcp-server/commit/8dbdc7b53da50137fd118631404312c71d8f4381)) by [@MQ37](https://github.com/MQ37)
