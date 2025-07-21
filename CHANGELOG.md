@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Add video tutorial into the Actor README. Simplify README ([#175](https://github.com/apify/actors-mcp-server/pull/175)) ([3547521](https://github.com/apify/actors-mcp-server/commit/3547521e23bbf9a5d49cb75f8ff275e88dfe5be4)) by [@jirispilka](https://github.com/jirispilka), closes [#138](https://github.com/apify/actors-mcp-server/issues/138), [#148](https://github.com/apify/actors-mcp-server/issues/148)
+- Progress notification ([#173](https://github.com/apify/actors-mcp-server/pull/173)) ([a562f64](https://github.com/apify/actors-mcp-server/commit/a562f642d91f307740eaafcca464f463c512448e)) by [@MichalKalita](https://github.com/MichalKalita), closes [#149](https://github.com/apify/actors-mcp-server/issues/149)
 
 
 <!-- git-cliff-unreleased-end -->
