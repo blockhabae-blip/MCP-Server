@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - Progress notification ([#173](https://github.com/apify/actors-mcp-server/pull/173)) ([a562f64](https://github.com/apify/actors-mcp-server/commit/a562f642d91f307740eaafcca464f463c512448e)) by [@MichalKalita](https://github.com/MichalKalita), closes [#149](https://github.com/apify/actors-mcp-server/issues/149)
 - Update README, make it shorter and concise ([#176](https://github.com/apify/actors-mcp-server/pull/176)) ([134a4ae](https://github.com/apify/actors-mcp-server/commit/134a4aebc3ddfd6b16bba1b49c859b8abe204e56)) by [@jirispilka](https://github.com/jirispilka)
 
+### 🐛 Bug Fixes
+
+- Embed thumbnail in README.md ([#177](https://github.com/apify/actors-mcp-server/pull/177)) ([b634125](https://github.com/apify/actors-mcp-server/commit/b6341254e94892bfce0f4a652b0af548923af81a)) by [@jirispilka](https://github.com/jirispilka)
+
 
 <!-- git-cliff-unreleased-end -->
 ## [0.2.14](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.14) (2025-07-17)
