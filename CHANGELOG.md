@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Release dxt format ([#178](https://github.com/apify/actors-mcp-server/pull/178)) ([0845205](https://github.com/apify/actors-mcp-server/commit/084520524d0c06cbb8be0d18579e180d077a8af7)) by [@MQ37](https://github.com/MQ37)
+- Prompts ([#187](https://github.com/apify/actors-mcp-server/pull/187)) ([e672ff2](https://github.com/apify/actors-mcp-server/commit/e672ff2aa69d6f0af5f4998068763905e46b0110)) by [@MQ37](https://github.com/MQ37), closes [#109](https://github.com/apify/actors-mcp-server/issues/109)
 
 ### 🐛 Bug Fixes
 
