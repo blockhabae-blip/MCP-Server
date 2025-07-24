@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.3.1 - **not yet released**
+## [0.2.16](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.16) (2025-07-24)
 
 ### 🚀 Features
 
@@ -15,7 +14,6 @@ All notable changes to this project will be documented in this file.
 - Export internals for apify-mcp-server ([#179](https://github.com/apify/actors-mcp-server/pull/179)) ([e1f529d](https://github.com/apify/actors-mcp-server/commit/e1f529d877def284e7622a220c042eb9dcb1fb9d)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.2.15](https://github.com/apify/actors-mcp-server/releases/tag/v0.2.15) (2025-07-21)
 
 ### 🚀 Features
