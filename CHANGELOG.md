@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### 🚀 Features
 
 - Add images with a new Apify logo ([#191](https://github.com/apify/actors-mcp-server/pull/191)) ([cc5ded9](https://github.com/apify/actors-mcp-server/commit/cc5ded9e6f1b5f325dd4010c67b1ba920aa3350e)) by [@jirispilka](https://github.com/jirispilka)
+- Add tool to get dataset schema so LLMs can understand dataset structure without fetching everything ([#190](https://github.com/apify/actors-mcp-server/pull/190)) ([9ad36d1](https://github.com/apify/actors-mcp-server/commit/9ad36d1a6ea29abbb310549183a060063bec5269)) by [@jirispilka](https://github.com/jirispilka)
 
 
 <!-- git-cliff-unreleased-end -->
