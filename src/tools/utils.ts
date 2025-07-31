@@ -2,7 +2,15 @@ import type { ValidateFunction } from 'ajv';
 import type Ajv from 'ajv';
 
 import { ACTOR_ENUM_MAX_LENGTH, ACTOR_MAX_DESCRIPTION_LENGTH } from '../const.js';
-import type { IActorInputSchema, ISchemaProperties } from '../types.js';
+import type { ActorInputSchemaProperties, IActorInputSchema, ISchemaProperties } from '../types.js';
+import {
+    addGlobsProperties,
+    addKeyValueProperties,
+    addProxyProperties,
+    addPseudoUrlsProperties,
+    addRequestListSourcesProperties,
+    addResourcePickerProperties as addArrayResourcePickerProperties,
+} from '../utils/apify-properties.js';
 
 export function actorNameToToolName(actorName: string): string {
     return actorName
@@ -48,42 +56,22 @@ export function fixedAjvCompile(ajvInstance: Ajv, schema: object): ValidateFunct
  * @param {Record<string, ISchemaProperties>} properties - The input schema properties
  * @returns {Record<string, ISchemaProperties>} Modified properties with nested properties
  */
-export function buildNestedProperties(properties: Record<string, ISchemaProperties>): Record<string, ISchemaProperties> {
+export function buildApifySpecificProperties(properties: Record<string, ISchemaProperties>): Record<string, ISchemaProperties> {
     const clonedProperties = { ...properties };
 
     for (const [propertyName, property] of Object.entries(clonedProperties)) {
         if (property.type === 'object' && property.editor === 'proxy') {
-            clonedProperties[propertyName] = {
-                ...property,
-                properties: {
-                    ...property.properties,
-                    useApifyProxy: {
-                        title: 'Use Apify Proxy',
-                        type: 'boolean',
-                        description: 'Whether to use Apify Proxy - ALWAYS SET TO TRUE.',
-                        default: true,
-                        examples: [true],
-                    },
-                },
-                required: ['useApifyProxy'],
-            };
+            clonedProperties[propertyName] = addProxyProperties(property);
         } else if (property.type === 'array' && property.editor === 'requestListSources') {
-            clonedProperties[propertyName] = {
-                ...property,
-                items: {
-                    ...property.items,
-                    type: 'object',
-                    title: 'Request list source',
-                    description: 'Request list source',
-                    properties: {
-                        url: {
-                            title: 'URL',
-                            type: 'string',
-                            description: 'URL of the request list source',
-                        },
-                    },
-                },
-            };
+            clonedProperties[propertyName] = addRequestListSourcesProperties(property);
+        } else if (property.type === 'array' && property.editor === 'pseudoUrls') {
+            clonedProperties[propertyName] = addPseudoUrlsProperties(property);
+        } else if (property.type === 'array' && property.editor === 'globs') {
+            clonedProperties[propertyName] = addGlobsProperties(property);
+        } else if (property.type === 'array' && property.editor === 'keyValue') {
+            clonedProperties[propertyName] = addKeyValueProperties(property);
+        } else if (property.type === 'array' && property.editor === 'resourcePicker') {
+            clonedProperties[propertyName] = addArrayResourcePickerProperties(property);
         }
     }
 
@@ -92,9 +80,7 @@ export function buildNestedProperties(properties: Record<string, ISchemaProperti
 
 /**
  * Filters schema properties to include only the necessary fields.
- *
  * This is done to reduce the size of the input schema and to make it more readable.
- *
  * @param properties
  */
 export function filterSchemaProperties(properties: { [key: string]: ISchemaProperties }): {
@@ -113,19 +99,31 @@ export function filterSchemaProperties(properties: { [key: string]: ISchemaPrope
             items: property.items,
             required: property.required,
         };
+    }
+    return filteredProperties;
+}
+
+/**
+ * For array properties missing items.type, infers and sets the type using inferArrayItemType.
+ * @param properties
+ */
+export function inferArrayItemsTypeIfMissing(properties: { [key: string]: ISchemaProperties }): {
+    [key: string]: ISchemaProperties
+} {
+    for (const [, property] of Object.entries(properties)) {
         if (property.type === 'array' && !property.items?.type) {
             const itemsType = inferArrayItemType(property);
             if (itemsType) {
-                filteredProperties[key].items = {
-                    ...filteredProperties[key].items,
-                    title: filteredProperties[key].title ?? 'Item',
-                    description: filteredProperties[key].description ?? 'Item',
+                property.items = {
+                    ...property.items,
+                    title: property.title ?? 'Item',
+                    description: property.description ?? 'Item',
                     type: itemsType,
                 };
             }
         }
     }
-    return filteredProperties;
+    return properties;
 }
 
 /**
@@ -173,6 +171,7 @@ export function inferArrayItemType(property: ISchemaProperties): string | null {
             stringList: 'string',
             json: 'object',
             globs: 'object',
+            select: 'string',
         };
         return editorTypeMap[editor] || null;
     }
@@ -278,4 +277,17 @@ export function decodeDotPropertyNames(properties: Record<string, unknown>): Rec
         decodedProperties[decodedKey] = value;
     }
     return decodedProperties;
+}
+
+export function transformActorInputSchemaProperties(input: Readonly<IActorInputSchema>): ActorInputSchemaProperties {
+    // Deep clone input to avoid mutating the original object
+    const inputClone: IActorInputSchema = structuredClone(input);
+    let transformedProperties = markInputPropertiesAsRequired(inputClone);
+    transformedProperties = buildApifySpecificProperties(transformedProperties);
+    transformedProperties = filterSchemaProperties(transformedProperties);
+    transformedProperties = inferArrayItemsTypeIfMissing(transformedProperties);
+    transformedProperties = shortenProperties(transformedProperties);
+    transformedProperties = addEnumsToDescriptionsWithExamples(transformedProperties);
+    transformedProperties = encodeDotPropertyNames(transformedProperties);
+    return transformedProperties;
 }
