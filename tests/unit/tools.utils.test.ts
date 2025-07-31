@@ -1,12 +1,136 @@
 import { describe, expect, it } from 'vitest';
 
 import { ACTOR_ENUM_MAX_LENGTH, ACTOR_MAX_DESCRIPTION_LENGTH } from '../../src/const.js';
-import { buildNestedProperties, decodeDotPropertyNames, encodeDotPropertyNames,
-    markInputPropertiesAsRequired, shortenProperties } from '../../src/tools/utils.js';
+import { buildApifySpecificProperties, decodeDotPropertyNames, encodeDotPropertyNames,
+    markInputPropertiesAsRequired, shortenProperties,
+    transformActorInputSchemaProperties } from '../../src/tools/utils.js';
 import type { IActorInputSchema, ISchemaProperties } from '../../src/types.js';
 
-describe('buildNestedProperties', () => {
-    it('should add useApifyProxy property to proxy objects', () => {
+describe('buildApifySpecificProperties', () => {
+    it('should add resource picker structure to array items with editor resourcePicker', () => {
+        const properties: Record<string, ISchemaProperties> = {
+            resources: {
+                type: 'array',
+                title: 'Resources',
+                description: 'Array of resources',
+                editor: 'resourcePicker',
+            },
+            otherProp: {
+                type: 'string',
+                title: 'Other property',
+                description: 'Some other property',
+            },
+        };
+
+        const result = buildApifySpecificProperties(properties);
+
+        // Check that resourcePicker array has proper item structure (string type)
+
+        expect(result.resources.items).toBeDefined();
+        expect(result.resources.items?.type).toBe('string');
+        expect(result.resources.items?.title).toBeDefined();
+        expect(result.resources.items?.description).toBeDefined();
+
+        // Check that other properties remain unchanged
+        expect(result.otherProp).toEqual(properties.otherProp);
+    });
+    it('should add key and value structure to array items with editor keyValue', () => {
+        const properties: Record<string, ISchemaProperties> = {
+            keyValuePairs: {
+                type: 'array',
+                title: 'Key-Value Pairs',
+                description: 'Array of key-value pairs',
+                editor: 'keyValue',
+            },
+            otherProp: {
+                type: 'string',
+                title: 'Other property',
+                description: 'Some other property',
+            },
+        };
+
+        const result = buildApifySpecificProperties(properties);
+
+        // Check that keyValue array has proper item structure
+        expect(result.keyValuePairs.items).toBeDefined();
+        expect(result.keyValuePairs.items?.type).toBe('object');
+        expect(result.keyValuePairs.items?.properties?.key).toBeDefined();
+        expect(result.keyValuePairs.items?.properties?.key.type).toBe('string');
+        expect(result.keyValuePairs.items?.properties?.value).toBeDefined();
+        expect(result.keyValuePairs.items?.properties?.value.type).toBe('string');
+
+        // Check that other properties remain unchanged
+        expect(result.otherProp).toEqual(properties.otherProp);
+    });
+    it('should add globs structure to array items with editor globs', () => {
+        const properties: Record<string, ISchemaProperties> = {
+            globs: {
+                type: 'array',
+                title: 'Globs',
+                description: 'Globs array',
+                editor: 'globs',
+            },
+            otherProp: {
+                type: 'string',
+                title: 'Other property',
+                description: 'Some other property',
+            },
+        };
+
+        const result = buildApifySpecificProperties(properties);
+
+        // Check that globs array has proper item structure
+        expect(result.globs.items).toBeDefined();
+        expect(result.globs.items?.type).toBe('object');
+        expect(result.globs.items?.properties?.glob).toBeDefined();
+        expect(result.globs.items?.properties?.glob.type).toBe('string');
+        expect(result.globs.items?.properties?.method).toBeDefined();
+        expect(result.globs.items?.properties?.method.type).toBe('string');
+        expect(result.globs.items?.properties?.payload).toBeDefined();
+        expect(result.globs.items?.properties?.payload.type).toBe('string');
+        expect(result.globs.items?.properties?.userData).toBeDefined();
+        expect(result.globs.items?.properties?.userData.type).toBe('object');
+        expect(result.globs.items?.properties?.headers).toBeDefined();
+        expect(result.globs.items?.properties?.headers.type).toBe('object');
+
+        // Check that other properties remain unchanged
+        expect(result.otherProp).toEqual(properties.otherProp);
+    });
+    it('should add pseudoUrls structure to array items with items.editor pseudoUrls', () => {
+        const properties: Record<string, ISchemaProperties> = {
+            pseudoUrls: {
+                type: 'array',
+                title: 'PseudoUrls',
+                description: 'PseudoUrls array',
+                editor: 'pseudoUrls',
+            },
+            otherProp: {
+                type: 'string',
+                title: 'Other property',
+                description: 'Some other property',
+            },
+        };
+
+        const result = buildApifySpecificProperties(properties);
+
+        // Check that pseudoUrls array has proper item structure
+        expect(result.pseudoUrls.items).toBeDefined();
+        expect(result.pseudoUrls.items?.type).toBe('object');
+        expect(result.pseudoUrls.items?.properties?.purl).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.purl.type).toBe('string');
+        expect(result.pseudoUrls.items?.properties?.method).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.method.type).toBe('string');
+        expect(result.pseudoUrls.items?.properties?.payload).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.payload.type).toBe('string');
+        expect(result.pseudoUrls.items?.properties?.userData).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.userData.type).toBe('object');
+        expect(result.pseudoUrls.items?.properties?.headers).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.headers.type).toBe('object');
+
+        // Check that other properties remain unchanged
+        expect(result.otherProp).toEqual(properties.otherProp);
+    });
+    it('should add useApifyProxy, apifyProxyGroups, and proxyUrls properties to proxy objects', () => {
         const properties: Record<string, ISchemaProperties> = {
             proxy: {
                 type: 'object',
@@ -22,7 +146,7 @@ describe('buildNestedProperties', () => {
             },
         };
 
-        const result = buildNestedProperties(properties);
+        const result = buildApifySpecificProperties(properties);
 
         // Check that proxy object has useApifyProxy property
         expect(result.proxy.properties).toBeDefined();
@@ -30,6 +154,21 @@ describe('buildNestedProperties', () => {
         expect(result.proxy.properties?.useApifyProxy.type).toBe('boolean');
         expect(result.proxy.properties?.useApifyProxy.default).toBe(true);
         expect(result.proxy.required).toContain('useApifyProxy');
+
+        // Check that proxy object has apifyProxyGroups property
+        expect(result.proxy.properties?.apifyProxyGroups).toBeDefined();
+        expect(result.proxy.properties?.apifyProxyGroups.type).toBe('array');
+        expect(result.proxy.properties?.apifyProxyGroups.items).toBeDefined();
+        expect(result.proxy.properties?.apifyProxyGroups.items?.enum).toEqual([
+            'RESIDENTIAL',
+            'DATACENTER',
+        ]);
+
+        // Check that proxy object has proxyUrls property
+        expect(result.proxy.properties?.proxyUrls).toBeDefined();
+        expect(result.proxy.properties?.proxyUrls.type).toBe('array');
+        expect(result.proxy.properties?.proxyUrls.items).toBeDefined();
+        expect(result.proxy.properties?.proxyUrls.items?.type).toBe('string');
 
         // Check that other properties remain unchanged
         expect(result.otherProp).toEqual(properties.otherProp);
@@ -50,7 +189,7 @@ describe('buildNestedProperties', () => {
             },
         };
 
-        const result = buildNestedProperties(properties);
+        const result = buildApifySpecificProperties(properties);
 
         // Check that requestListSources array has proper item structure
         expect(result.sources.items).toBeDefined();
@@ -88,7 +227,7 @@ describe('buildNestedProperties', () => {
             },
         };
 
-        const result = buildNestedProperties(properties);
+        const result = buildApifySpecificProperties(properties);
 
         // Check that regular properties remain unchanged
         expect(result).toEqual(properties);
@@ -96,7 +235,7 @@ describe('buildNestedProperties', () => {
 
     it('should handle empty properties object', () => {
         const properties: Record<string, ISchemaProperties> = {};
-        const result = buildNestedProperties(properties);
+        const result = buildApifySpecificProperties(properties);
         expect(result).toEqual({});
     });
 });
@@ -231,11 +370,17 @@ describe('shortenProperties', () => {
 
         // Check that enum was shortened
         expect(result.prop1.enum).toBeDefined();
-        expect(result.prop1.enum!.length).toBeLessThan(enumValues.length);
+        if (result.prop1.enum) {
+            expect(result.prop1.enum.length).toBeLessThan(30);
+            const totalEnumLen = result.prop1.enum.reduce((sum, v) => sum + v.length, 0);
+            expect(totalEnumLen).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
 
-        // Calculate total character length of enum values
-        const totalLength = result.prop1.enum!.reduce((sum, val) => sum + val.length, 0);
-        expect(totalLength).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
+            // Calculate total character length of enum values
+            const totalLength = result.prop1.enum.reduce((sum, val) => sum + val.length, 0);
+            expect(totalLength).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
+        } else {
+            expect(result.prop1.enum).toBeUndefined();
+        }
     });
 
     it('should shorten items.enum values if they exceed the limit', () => {
@@ -259,11 +404,16 @@ describe('shortenProperties', () => {
 
         // Check that items.enum was shortened
         expect(result.prop1.items?.enum).toBeDefined();
-        expect(result.prop1.items!.enum!.length).toBeLessThan(enumValues.length);
+        if (result.prop1.items?.enum) {
+            expect(result.prop1.items.enum.length).toBeLessThan(enumValues.length);
+            const totalLength = result.prop1.items.enum.reduce((sum, val) => sum + val.length, 0);
+            expect(totalLength).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
 
-        // Calculate total character length of enum values
-        const totalLength = result.prop1.items!.enum!.reduce((sum, val) => sum + val.length, 0);
-        expect(totalLength).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
+            // Calculate total character length of enum values
+            expect(totalLength).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
+        } else {
+            expect(result.prop1.items?.enum).toBeUndefined();
+        }
     });
 
     it('should handle properties without enum or items.enum', () => {
@@ -366,5 +516,274 @@ describe('decodeDotPropertyNames', () => {
         };
         const result = decodeDotPropertyNames(input);
         expect(result).toEqual(input);
+    });
+});
+
+// ----------------------
+// Tests for transformActorInputSchemaProperties
+// ----------------------
+describe('transformActorInputSchemaProperties', () => {
+    it('should correctly transform a schema with all Apify-specific types and features', () => {
+        const input: IActorInputSchema = {
+            title: 'Complex Schema',
+            type: 'object',
+            required: [
+                'resourcePicker',
+                'keyValue',
+                'globs',
+                'pseudoUrls',
+                'proxy',
+                'requestListSources',
+                'simpleString',
+                'enumString',
+                'arrayOfStrings',
+                'dotted.name',
+            ],
+            properties: {
+                resourcePicker: {
+                    type: 'array',
+                    title: 'Resource Picker',
+                    description: 'Pick a resource',
+                    editor: 'resourcePicker',
+                },
+                keyValue: {
+                    type: 'array',
+                    title: 'Key Value',
+                    description: 'Key value pairs',
+                    editor: 'keyValue',
+                },
+                globs: {
+                    type: 'array',
+                    title: 'Globs',
+                    description: 'Globs array',
+                    editor: 'globs',
+                },
+                pseudoUrls: {
+                    type: 'array',
+                    title: 'PseudoUrls',
+                    description: 'PseudoUrls array',
+                    editor: 'pseudoUrls',
+                },
+                proxy: {
+                    type: 'object',
+                    title: 'Proxy',
+                    description: 'Proxy config',
+                    editor: 'proxy',
+                    properties: {},
+                },
+                requestListSources: {
+                    type: 'array',
+                    title: 'Request List Sources',
+                    description: 'Sources',
+                    editor: 'requestListSources',
+                },
+                simpleString: {
+                    type: 'string',
+                    title: 'Simple String',
+                    description: 'A simple string',
+                },
+                enumString: {
+                    type: 'string',
+                    title: 'Enum String',
+                    description: 'A string with enum',
+                    enum: ['A', 'B', 'C'],
+                    default: 'A',
+                },
+                arrayOfStrings: {
+                    type: 'array',
+                    title: 'Array of Strings',
+                    description: 'An array of strings',
+                    prefill: ['foo', 'bar'],
+                },
+                'dotted.name': {
+                    type: 'number',
+                    title: 'Dotted Name',
+                    description: 'A property with a dot in its name',
+                },
+            },
+        };
+
+        const result = transformActorInputSchemaProperties(input);
+
+        // Resource Picker
+        expect(result.resourcePicker).toBeDefined();
+        expect(result.resourcePicker.items).toBeDefined();
+        expect(result.resourcePicker.items?.type).toBe('string');
+        expect(result.resourcePicker.description).toContain('**REQUIRED**');
+
+        // Key Value
+        expect(result.keyValue).toBeDefined();
+        expect(result.keyValue.items).toBeDefined();
+        expect(result.keyValue.items?.type).toBe('object');
+        expect(result.keyValue.items?.properties?.key).toBeDefined();
+        expect(result.keyValue.items?.properties?.value).toBeDefined();
+        expect(result.keyValue.description).toContain('**REQUIRED**');
+
+        // Globs
+        expect(result.globs).toBeDefined();
+        expect(result.globs.items).toBeDefined();
+        expect(result.globs.items?.properties?.glob).toBeDefined();
+        expect(result.globs.items?.properties?.userData).toBeDefined();
+        expect(result.globs.description).toContain('**REQUIRED**');
+
+        // PseudoUrls
+        expect(result.pseudoUrls).toBeDefined();
+        expect(result.pseudoUrls.items).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.purl).toBeDefined();
+        expect(result.pseudoUrls.items?.properties?.method).toBeDefined();
+        expect(result.pseudoUrls.description).toContain('**REQUIRED**');
+
+        // Proxy
+        expect(result.proxy).toBeDefined();
+        expect(result.proxy.properties?.useApifyProxy).toBeDefined();
+        expect(result.proxy.properties?.apifyProxyGroups).toBeDefined();
+        expect(result.proxy.properties?.proxyUrls).toBeDefined();
+        expect(result.proxy.required).toContain('useApifyProxy');
+        expect(result.proxy.description).toContain('**REQUIRED**');
+
+        // Request List Sources
+        expect(result.requestListSources).toBeDefined();
+        expect(result.requestListSources.items).toBeDefined();
+        expect(result.requestListSources.items?.properties?.url).toBeDefined();
+        expect(result.requestListSources.description).toContain('**REQUIRED**');
+
+        // Simple String
+        expect(result.simpleString).toBeDefined();
+        expect(result.simpleString.type).toBe('string');
+        expect(result.simpleString.description).toContain('**REQUIRED**');
+
+        // Enum String
+        expect(result.enumString).toBeDefined();
+        expect(result.enumString.enum).toBeDefined();
+        expect(result.enumString.description).toContain('Possible values:');
+        expect(result.enumString.description).toContain('Example values:');
+        expect(result.enumString.description).toContain('**REQUIRED**');
+
+        // Array of Strings
+        expect(result.arrayOfStrings).toBeDefined();
+        expect(result.arrayOfStrings.items).toBeDefined();
+        expect(result.arrayOfStrings.items?.type).toBe('string');
+        expect(result.arrayOfStrings.description).toContain('**REQUIRED**');
+
+        // Dotted property name
+        expect(result['dotted-dot-name']).toBeDefined();
+        expect(result['dotted-dot-name'].type).toBe('number');
+        expect(result['dotted-dot-name'].description).toContain('**REQUIRED**');
+        // Should not have the original dotted name
+        expect(result['dotted.name']).toBeUndefined();
+    });
+    it('should apply all transformations in the correct order', () => {
+        const input = {
+            title: 'Test',
+            type: 'object',
+            required: ['foo.bar', 'enumProp'],
+            properties: {
+                'foo.bar': {
+                    type: 'string',
+                    title: 'Foo Bar',
+                    description: 'desc',
+                },
+                proxy: {
+                    type: 'object',
+                    editor: 'proxy',
+                    title: 'Proxy',
+                    description: 'Proxy desc',
+                    properties: {},
+                },
+                sources: {
+                    type: 'array',
+                    editor: 'requestListSources',
+                    title: 'Sources',
+                    description: 'Sources desc',
+                },
+                enumProp: {
+                    type: 'string',
+                    title: 'Enum',
+                    description: 'Enum desc',
+                    enum: Array.from({ length: 30 }, (_, i) => `val${i}`),
+                },
+                longDesc: {
+                    type: 'string',
+                    title: 'Long',
+                    description: 'a'.repeat(ACTOR_MAX_DESCRIPTION_LENGTH + 10),
+                },
+            },
+        };
+        const result = transformActorInputSchemaProperties(input);
+        // 1. markInputPropertiesAsRequired: required fields get **REQUIRED** in description
+        expect(result['foo-dot-bar'].description).toContain('**REQUIRED**');
+        expect(result.enumProp.description).toContain('**REQUIRED**');
+        // 2. buildNestedProperties: proxy gets useApifyProxy, sources gets url
+        expect(result.proxy.properties).toBeDefined();
+        expect(result.proxy.properties?.useApifyProxy).toBeDefined();
+        expect(result.sources.items).toBeDefined();
+        expect(result.sources.items?.properties?.url).toBeDefined();
+        // 3. filterSchemaProperties: only allowed fields present
+        expect(Object.keys(result['foo-dot-bar'])).toEqual(
+            expect.arrayContaining(['title', 'description', 'type', 'default', 'prefill', 'properties', 'items', 'required', 'enum']),
+        );
+        // 4. shortenProperties: longDesc is truncated, enumProp.enum is shortened
+        expect(result.longDesc.description.length).toBeLessThanOrEqual(ACTOR_MAX_DESCRIPTION_LENGTH + 3);
+        if (result.enumProp.enum) {
+            expect(result.enumProp.enum.length).toBeLessThanOrEqual(30);
+            const totalEnumLen = result.enumProp.enum.reduce((sum, v) => sum + v.length, 0);
+            expect(totalEnumLen).toBeLessThanOrEqual(ACTOR_ENUM_MAX_LENGTH);
+        } else {
+            // If enum is too long, it may be set to undefined
+            expect(result.enumProp.enum).toBeUndefined();
+        }
+        // 5. addEnumsToDescriptionsWithExamples: enum values in description
+        expect(result.enumProp.description).toMatch(/Possible values:/);
+        // 6. encodeDotPropertyNames: foo.bar becomes foo-dot-bar
+        expect(result['foo-dot-bar']).toBeDefined();
+        expect(result['foo.bar']).toBeUndefined();
+    });
+
+    it('should handle input with no required, no enums, no dots', () => {
+        const input = {
+            title: 'Simple',
+            type: 'object',
+            properties: {
+                simple: {
+                    type: 'string',
+                    title: 'Simple',
+                    description: 'desc',
+                },
+            },
+        };
+        const result = transformActorInputSchemaProperties(input);
+        expect(result.simple.description).toBe('desc');
+        expect(result.simple.enum).toBeUndefined();
+        expect(result.simple).toBeDefined();
+    });
+
+    it('should encode all dotted property names', () => {
+        const input = {
+            title: 'Dots',
+            type: 'object',
+            properties: {
+                'a.b': { type: 'string', title: 'A B', description: 'desc' },
+                'c.d.e': { type: 'number', title: 'CDE', description: 'desc2' },
+            },
+        };
+        const result = transformActorInputSchemaProperties(input);
+        expect(result['a-dot-b']).toBeDefined();
+        expect(result['c-dot-d-dot-e']).toBeDefined();
+        expect(result['a.b']).toBeUndefined();
+        expect(result['c.d.e']).toBeUndefined();
+    });
+
+    it('should not mutate the input object', () => {
+        const input = {
+            title: 'Immut',
+            type: 'object',
+            required: ['foo'],
+            properties: {
+                foo: { type: 'string', title: 'Foo', description: 'desc' },
+            },
+        };
+        const inputCopy = JSON.parse(JSON.stringify(input));
+        transformActorInputSchemaProperties(input);
+        expect(input).toEqual(inputCopy);
     });
 });

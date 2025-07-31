@@ -279,3 +279,5 @@ export type PromptBase = Prompt & {
      */
     render: (args: Record<string, string>) => string;
 };
+
+export type ActorInputSchemaProperties = Record<string, ISchemaProperties>;
