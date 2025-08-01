@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.3.2 - **not yet released**
+## [0.3.2](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.2) (2025-08-01)
 
 ### 🚀 Features
 
@@ -11,9 +10,13 @@ All notable changes to this project will be documented in this file.
 - Add tool to get dataset schema so LLMs can understand dataset structure without fetching everything ([#190](https://github.com/apify/actors-mcp-server/pull/190)) ([9ad36d1](https://github.com/apify/actors-mcp-server/commit/9ad36d1a6ea29abbb310549183a060063bec5269)) by [@jirispilka](https://github.com/jirispilka)
 - Return Actor card in markdown ([#195](https://github.com/apify/actors-mcp-server/pull/195)) ([bfd9016](https://github.com/apify/actors-mcp-server/commit/bfd9016726d237dc2fa7e6b6e1bce2c177cfdc54)) by [@jirispilka](https://github.com/jirispilka), closes [#181](https://github.com/apify/actors-mcp-server/issues/181)
 - Handle Apify specific input schema props ([#196](https://github.com/apify/actors-mcp-server/pull/196)) ([820cff8](https://github.com/apify/actors-mcp-server/commit/820cff8f6bfa87467c1fa58c93794d1a9017ca6d)) by [@MQ37](https://github.com/MQ37), closes [#182](https://github.com/apify/actors-mcp-server/issues/182)
+- Tools dump ([#199](https://github.com/apify/actors-mcp-server/pull/199)) ([b657795](https://github.com/apify/actors-mcp-server/commit/b657795b052ddbf5abc1c4300cb0f663b8abce71)) by [@MQ37](https://github.com/MQ37)
+
+### 🐛 Bug Fixes
+
+- Failing integration test ([#200](https://github.com/apify/actors-mcp-server/pull/200)) ([a48aa0a](https://github.com/apify/actors-mcp-server/commit/a48aa0a3b9f4108b913746529bf800680b57fb98)) by [@MQ37](https://github.com/MQ37)
 
 
-<!-- git-cliff-unreleased-end -->
 
 ## [0.3.1](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.1) (2025-07-24)
 
