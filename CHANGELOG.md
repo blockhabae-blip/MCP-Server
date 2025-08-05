@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.3.3 - **not yet released**
+## [0.3.3](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.3) (2025-08-05)
 
 ### 🚀 Features
 
 - Change info logs to debug ([#204](https://github.com/apify/actors-mcp-server/pull/204)) ([1f45d7f](https://github.com/apify/actors-mcp-server/commit/1f45d7fb45dbd18e69687eeb89fb098969a6228d)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.3.2](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.2) (2025-08-01)
 
 ### 🚀 Features
