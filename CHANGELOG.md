@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.3.6 - **not yet released**
+## [0.3.6](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.6) (2025-08-06)
 
 ### 🚀 Features
 
 - Update dxt file ([#208](https://github.com/apify/actors-mcp-server/pull/208)) ([1bedc59](https://github.com/apify/actors-mcp-server/commit/1bedc59cb4a0e3bf5abd493298ec4fecb9c40fef)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.3.5](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.5) (2025-08-06)
 
 ### 🐛 Bug Fixes
