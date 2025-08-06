@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.3.5 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Adding non existent Actor ([#205](https://github.com/apify/actors-mcp-server/pull/205)) ([b82fb1b](https://github.com/apify/actors-mcp-server/commit/b82fb1b15a734a556dad171ed428d4440c6176f1)) by [@MQ37](https://github.com/MQ37)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.3.4](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.4) (2025-08-06)
 
 ### 🚀 Features
