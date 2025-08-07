@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.3.8 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Change log message for actor-mcp ([#211](https://github.com/apify/actors-mcp-server/pull/211)) ([3697b9f](https://github.com/apify/actors-mcp-server/commit/3697b9f48ab3c3b51dfe773375f6493197df7fa9)) by [@jirispilka](https://github.com/jirispilka)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.3.7](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.7) (2025-08-07)
 
 ### 🐛 Bug Fixes
