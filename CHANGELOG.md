@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [0.3.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.9) (2025-08-21)
 
+
+## [0.3.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.9) (2025-08-21)
+
 ### 🚀 Features
 
 - **dxt:** Add mcp tool configuration options ([#221](https://github.com/apify/actors-mcp-server/pull/221)) ([5b305c5](https://github.com/apify/actors-mcp-server/commit/5b305c5239ae515a966c055b356d0bc3b90ee301)) by [@MQ37](https://github.com/MQ37), closes [#219](https://github.com/apify/actors-mcp-server/issues/219)
