@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.0) (2025-08-26)
+
+### 🚀 Features
+
+- **input:** Allow empty tools and actors to allow  greater control of exposed tools ([#218](https://github.com/apify/apify-mcp-server/pull/218)) ([a4a8638](https://github.com/apify/apify-mcp-server/commit/a4a86389fb65bed099974993ab34b63f7159064d)) by [@MQ37](https://github.com/MQ37), closes [#214](https://github.com/apify/apify-mcp-server/issues/214)
+
+### 🐛 Bug Fixes
+
+- Description in package.json and manifest.json ([#234](https://github.com/apify/apify-mcp-server/pull/234)) ([9f4bcfa](https://github.com/apify/apify-mcp-server/commit/9f4bcfa59df231d12efe1ca574641943c1d1e26e)) by [@jirispilka](https://github.com/jirispilka)
+- Change github repository links ([#237](https://github.com/apify/apify-mcp-server/pull/237)) ([6216fa4](https://github.com/apify/apify-mcp-server/commit/6216fa40638616c481ce401cd671a112e897e42a)) by [@jirispilka](https://github.com/jirispilka)
+
+
 ## [0.3.9](https://github.com/apify/actors-mcp-server/releases/tag/v0.3.9) (2025-08-21)
 
 
