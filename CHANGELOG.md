@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.1) (2025-08-27)
+
+### 🚀 Features
+
+- Implement mcp logging set level request handler ([#242](https://github.com/apify/apify-mcp-server/pull/242)) ([339d556](https://github.com/apify/apify-mcp-server/commit/339d556bd378c36e3091515bda7d6086cdda69ab)) by [@MQ37](https://github.com/MQ37), closes [#231](https://github.com/apify/apify-mcp-server/issues/231)
+
+
 ## [0.4.0](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.0) (2025-08-26)
 
 
