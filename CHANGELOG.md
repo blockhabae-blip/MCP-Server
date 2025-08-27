@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.3](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.3) (2025-08-27)
+
+### 🐛 Bug Fixes
+
+- Dxt manifest fix prompts ([#246](https://github.com/apify/apify-mcp-server/pull/246)) ([7c89f38](https://github.com/apify/apify-mcp-server/commit/7c89f388c40e756a5f9fcad18ffe31e960962343)) by [@MQ37](https://github.com/MQ37)
+
+
 ## [0.4.2](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.2) (2025-08-27)
 
 
