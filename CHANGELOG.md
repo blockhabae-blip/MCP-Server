@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.4](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.4) (2025-08-28)
+
+### 🐛 Bug Fixes
+
+- Add resource list method to prevent client not respecting capabilities from crashing, update manifest.json for dxt ([#249](https://github.com/apify/apify-mcp-server/pull/249)) ([1dca956](https://github.com/apify/apify-mcp-server/commit/1dca956e5deb3efbb604005710fdbf2794202321)) by [@MQ37](https://github.com/MQ37)
+
+
 ## [0.4.3](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.3) (2025-08-27)
 
 ### 🐛 Bug Fixes
