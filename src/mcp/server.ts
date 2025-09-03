@@ -524,13 +524,23 @@ export class ActorsMcpServer {
 
                     try {
                         log.info('Calling Actor', { actorName: actorTool.actorFullName, input: args });
-                        const { runId, datasetId, items } = await callActorGetDataset(
+                        const result = await callActorGetDataset(
                             actorTool.actorFullName,
                             args,
                             apifyToken as string,
                             callOptions,
                             progressTracker,
+                            extra.signal,
                         );
+
+                        if (!result) {
+                            // Receivers of cancellation notifications SHOULD NOT send a response for the cancelled request
+                            // https://modelcontextprotocol.io/specification/2025-06-18/basic/utilities/cancellation#behavior-requirements
+                            return { };
+                        }
+
+                        const { runId, datasetId, items } = result;
+
                         const content = [
                             { type: 'text', text: `Actor finished with runId: ${runId}, datasetId ${datasetId}` },
                         ];
