@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.5](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.5) (2025-09-04)
+
+### 🚀 Features
+
+- Cancellable Actor run ([#228](https://github.com/apify/apify-mcp-server/pull/228)) ([9fc9094](https://github.com/apify/apify-mcp-server/commit/9fc9094f65c5ac70ec8f3d8d6a43ac7839b34cb1)) by [@MichalKalita](https://github.com/MichalKalita), closes [#160](https://github.com/apify/apify-mcp-server/issues/160)
+
+### 🐛 Bug Fixes
+
+- Handle deprecated tool preview ([#251](https://github.com/apify/apify-mcp-server/pull/251)) ([ff565f7](https://github.com/apify/apify-mcp-server/commit/ff565f7a77b57dd847411466c961f427ba56c371)) by [@jirispilka](https://github.com/jirispilka), closes [#252](https://github.com/apify/apify-mcp-server/issues/252)
+
+
 ## [0.4.4](https://github.com/apify/apify-mcp-server/releases/tag/v0.4.4) (2025-08-28)
 
 ### 🐛 Bug Fixes
