@@ -6,7 +6,7 @@ describe('ProgressTracker', () => {
     it('should send progress notifications correctly', async () => {
         const mockSendNotification = vi.fn();
         const progressToken = 'test-token-123';
-        const tracker = new ProgressTracker(progressToken, mockSendNotification);
+        const tracker = new ProgressTracker({ progressToken, sendNotification: mockSendNotification });
 
         await tracker.updateProgress('Quarter done');
 
@@ -22,7 +22,7 @@ describe('ProgressTracker', () => {
 
     it('should track actor run status updates', async () => {
         const mockSendNotification = vi.fn();
-        const tracker = new ProgressTracker('test-token', mockSendNotification);
+        const tracker = new ProgressTracker({ progressToken: 'test-token', sendNotification: mockSendNotification });
 
         // Test with a simple manual update instead of mocking the full actor run flow
         await tracker.updateProgress('test-actor: READY');
@@ -50,10 +50,37 @@ describe('ProgressTracker', () => {
 
     it('should handle notification send errors gracefully', async () => {
         const mockSendNotification = vi.fn().mockRejectedValue(new Error('Network error'));
-        const tracker = new ProgressTracker('test-token', mockSendNotification);
+        const tracker = new ProgressTracker({ progressToken: 'test-token', sendNotification: mockSendNotification });
 
         // Should not throw
         await expect(tracker.updateProgress('Test')).resolves.toBeUndefined();
         expect(mockSendNotification).toHaveBeenCalled();
+    });
+
+    it('should call onStatusMessage with the progress message', async () => {
+        const mockOnStatusMessage = vi.fn();
+        const tracker = new ProgressTracker({ onStatusMessage: mockOnStatusMessage });
+
+        await tracker.updateProgress('Actor running');
+
+        expect(mockOnStatusMessage).toHaveBeenCalledWith('Actor running');
+    });
+
+    it('should not call onStatusMessage when message is undefined', async () => {
+        const mockOnStatusMessage = vi.fn();
+        const tracker = new ProgressTracker({ onStatusMessage: mockOnStatusMessage });
+
+        await tracker.updateProgress();
+
+        expect(mockOnStatusMessage).not.toHaveBeenCalled();
+    });
+
+    it('should handle onStatusMessage errors gracefully', async () => {
+        const mockOnStatusMessage = vi.fn().mockRejectedValue(new Error('Store error'));
+        const tracker = new ProgressTracker({ onStatusMessage: mockOnStatusMessage });
+
+        // Should not throw
+        await expect(tracker.updateProgress('Test')).resolves.toBeUndefined();
+        expect(mockOnStatusMessage).toHaveBeenCalledWith('Test');
     });
 });
