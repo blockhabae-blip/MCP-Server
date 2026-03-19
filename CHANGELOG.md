@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.9.12 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Drop Node.js requirement from 22 to 18 and remove cheerio dependency ([#572](https://github.com/apify/apify-mcp-server/pull/572)) ([80d66f3](https://github.com/apify/apify-mcp-server/commit/80d66f3ec09a1cdee063f3d8821d6cd37cc76f17)) by [@jirispilka](https://github.com/jirispilka)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.9.11](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.11) (2026-03-13)
 
 ### 🐛 Bug Fixes
