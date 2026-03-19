@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 <!-- git-cliff-unreleased-start -->
 ## 0.9.12 - **not yet released**
 
+### 🚀 Features
+
+- Propagate task statusMessage to tasks&#x2F;get and tasks&#x2F;list ([#556](https://github.com/apify/apify-mcp-server/pull/556)) ([73d6465](https://github.com/apify/apify-mcp-server/commit/73d6465960022ca65c7113c45bac906de175ba52)) by [@MQ37](https://github.com/MQ37), closes [#555](https://github.com/apify/apify-mcp-server/issues/555)
+
 ### 🐛 Bug Fixes
 
 - Drop Node.js requirement from 22 to 18 and remove cheerio dependency ([#572](https://github.com/apify/apify-mcp-server/pull/572)) ([80d66f3](https://github.com/apify/apify-mcp-server/commit/80d66f3ec09a1cdee063f3d8821d6cd37cc76f17)) by [@jirispilka](https://github.com/jirispilka)
