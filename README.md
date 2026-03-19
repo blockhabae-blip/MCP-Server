@@ -235,11 +235,11 @@ All tools include metadata annotations to help MCP clients and LLMs understand t
 
 - **`title`**: Short display name for the tool (e.g., "Search Actors", "Call Actor", "apify/rag-web-browser")
 - **`readOnlyHint`**: `true` for tools that only read data without modifying state (e.g., `get-dataset`, `fetch-actor-details`)
-- **`openWorldHint`**: `true` for tools that access external resources outside the Apify platform (e.g., `call-actor` executes external Actors, `get-html-skeleton` scrapes external websites). Tools that interact only with the Apify platform (like `search-actors` or `fetch-apify-docs`) do not have this hint.
+- **`openWorldHint`**: `true` for tools that access external resources outside the Apify platform (e.g., `call-actor` executes external Actors). Tools that interact only with the Apify platform (like `search-actors` or `fetch-apify-docs`) do not have this hint.
 
 ### Tools configuration
 
-The `tools` configuration parameter is used to specify loaded tools - either categories or specific tools directly, and Apify Actors. For example, `tools=storage,runs` loads two categories; `tools=add-actor` loads just one tool.
+The `tools` configuration parameter is used to specify loaded tools – either categories or specific tools directly, and Apify Actors. For example, `tools=storage,runs` loads two categories; `tools=add-actor` loads just one tool.
 
 When no query parameters are provided, the MCP server loads the following `tools` by default:
 
@@ -247,7 +247,7 @@ When no query parameters are provided, the MCP server loads the following `tools
 - `docs`
 - `apify/rag-web-browser`
 
-If the tools parameter is specified, only the listed tools or categories will be enabled - no default tools will be included.
+If the tools parameter is specified, only the listed tools or categories will be enabled – no default tools will be included.
 
 > **Easy configuration:**
 >
@@ -390,7 +390,7 @@ For detailed development setup, project structure, and local testing instruction
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/en) (v22 or higher)
+- [Node.js](https://nodejs.org/en) (v18 or higher)
 
 Create an environment file, `.env`, with the following content:
 ```text
@@ -446,9 +446,49 @@ The Apify MCP Server is also available on [Docker Hub](https://hub.docker.com/mc
 
 # 🐛 Troubleshooting (local MCP server)
 
-- Make sure you have `node` installed by running `node -v`.
+- Make sure you have `node` (v18 or higher) installed by running `node -v`.
 - Make sure the `APIFY_TOKEN` environment variable is set.
 - Always use the latest version of the MCP server by using `@apify/actors-mcp-server@latest`.
+
+### Common issues
+
+#### "Unable to connect to extension server" or tools not loading
+
+This is most commonly caused by a **corrupted npx cache**. Fix it by clearing the cache and retrying:
+
+```bash
+# Clear the npx cache
+rm -rf ~/.npm/_npx
+
+# Retry
+npx -y @apify/actors-mcp-server@latest
+```
+
+#### Errors like "File is not defined" or "ReadableStream is not defined"
+
+You are running an **outdated version of Node.js**. The Apify MCP server requires Node.js 18 or higher:
+
+```bash
+node -v  # Check your version
+```
+
+If your version is below 18, update Node.js from [nodejs.org](https://nodejs.org).
+
+#### "Cannot find module" errors
+
+This usually indicates a corrupted `npx` cache (see above). Clear it with `rm -rf ~/.npm/_npx` and retry.
+
+#### Server works in Claude Desktop chat but not in cowork mode
+
+This is a known issue we are investigating. As a workaround, try using the hosted server at [mcp.apify.com](https://mcp.apify.com) instead of the local stdio server.
+
+### Checking logs
+
+If you encounter issues, check the Claude Desktop logs for error details:
+
+- **macOS**: `~/Library/Logs/Claude/`
+- **Windows**: `%APPDATA%\Claude\logs\`
+- **Linux**: `~/.config/Claude/logs/`
 
 ### Debugging the NPM package
 
