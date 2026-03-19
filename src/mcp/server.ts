@@ -1013,43 +1013,52 @@ Please verify the tool name and ensure the tool is properly registered.`;
                 }
             }
 
+            // Callback to propagate Actor run statusMessage into the task store.
+            // Clients retrieve it via tasks/get and tasks/list polling.
+            // TODO: Also send notifications/tasks/status so clients get real-time push updates
+            const onStatusMessage = async (message: string) => {
+                await this.taskStore.updateTaskStatus(taskId, 'working', message, mcpSessionId);
+            };
+
             // Handle internal tool execution in task mode
             if (toolStatus === TOOL_STATUS.SUCCEEDED && tool.type === 'internal') {
-                const progressTracker = createProgressTracker(progressToken, extra.sendNotification, taskId);
+                const progressTracker = createProgressTracker(progressToken, extra.sendNotification, taskId, onStatusMessage);
 
-                log.info('Calling internal tool for task', { taskId, name: tool.name, mcpSessionId, input: redactSkyfirePayId(args) });
-                const res = await tool.call({
-                    args,
-                    extra,
-                    apifyMcpServer: this,
-                    mcpServer: this.server,
-                    apifyToken,
-                    userRentedActorIds,
-                    progressTracker,
-                    mcpSessionId,
-                }) as object;
+                try {
+                    log.info('Calling internal tool for task', { taskId, name: tool.name, mcpSessionId, input: redactSkyfirePayId(args) });
+                    const res = await tool.call({
+                        args,
+                        extra,
+                        apifyMcpServer: this,
+                        mcpServer: this.server,
+                        apifyToken,
+                        userRentedActorIds,
+                        progressTracker,
+                        mcpSessionId,
+                    }) as object;
 
-                if (progressTracker) {
-                    progressTracker.stop();
+                    // If the tool returned internalToolStatus, use it; otherwise infer from isError flag
+                    const { internalToolStatus, ...rest } = res as { internalToolStatus?: ToolStatus; isError?: boolean };
+                    if (internalToolStatus !== undefined) {
+                        toolStatus = internalToolStatus;
+                    } else if ('isError' in rest && rest.isError) {
+                        toolStatus = TOOL_STATUS.FAILED;
+                    } else {
+                        toolStatus = TOOL_STATUS.SUCCEEDED;
+                    }
+
+                    // Never expose internalToolStatus to MCP clients
+                    result = rest;
+                } finally {
+                    if (progressTracker) {
+                        progressTracker.stop();
+                    }
                 }
-
-                // If tool returned internalToolStatus, use it; otherwise infer from isError flag
-                const { internalToolStatus, ...rest } = res as { internalToolStatus?: ToolStatus; isError?: boolean };
-                if (internalToolStatus !== undefined) {
-                    toolStatus = internalToolStatus;
-                } else if ('isError' in rest && rest.isError) {
-                    toolStatus = TOOL_STATUS.FAILED;
-                } else {
-                    toolStatus = TOOL_STATUS.SUCCEEDED;
-                }
-
-                // Never expose internalToolStatus to MCP clients
-                result = rest;
             }
 
             // Handle actor tool execution in task mode
             if (toolStatus === TOOL_STATUS.SUCCEEDED && tool.type === 'actor') {
-                const progressTracker = createProgressTracker(progressToken, extra.sendNotification, taskId);
+                const progressTracker = createProgressTracker(progressToken, extra.sendNotification, taskId, onStatusMessage);
                 const { 'skyfire-pay-id': _skyfirePayId, ...actorArgs } = args as Record<string, unknown>;
                 const apifyClient = createApifyClientWithSkyfireSupport(this, args, apifyToken);
 
