@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### 🐛 Bug Fixes
 
 - Drop Node.js requirement from 22 to 18 and remove cheerio dependency ([#572](https://github.com/apify/apify-mcp-server/pull/572)) ([80d66f3](https://github.com/apify/apify-mcp-server/commit/80d66f3ec09a1cdee063f3d8821d6cd37cc76f17)) by [@jirispilka](https://github.com/jirispilka)
+- Show error state in ActorRun widget instead of loading ([#571](https://github.com/apify/apify-mcp-server/pull/571)) ([9edfa8f](https://github.com/apify/apify-mcp-server/commit/9edfa8f3ff2401fc5a31daa1ae7af53c1c7b1fd7)) by [@jirispilka](https://github.com/jirispilka)
 
 
 <!-- git-cliff-unreleased-end -->
