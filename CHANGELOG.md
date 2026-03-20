@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.9.12 - **not yet released**
+## [0.9.12](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.12) (2026-03-20)
 
 ### 🚀 Features
 
@@ -16,7 +15,6 @@ All notable changes to this project will be documented in this file.
 - Rename itemCount to totalItemCount and add previewItemCount in dataset structures. Return total number correctly. ([#566](https://github.com/apify/apify-mcp-server/pull/566)) ([97c490a](https://github.com/apify/apify-mcp-server/commit/97c490ac64cb8e433c587feb3f9dd816adea8ea2)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.9.11](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.11) (2026-03-13)
 
 ### 🐛 Bug Fixes
