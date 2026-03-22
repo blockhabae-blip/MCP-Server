@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - Fetch docs as markdown directly and prefer platform docs over Academy ([#575](https://github.com/apify/apify-mcp-server/pull/575)) ([6e5e23b](https://github.com/apify/apify-mcp-server/commit/6e5e23b3bd93519d23418d54c663bc10c157c8e8)) by [@jirispilka](https://github.com/jirispilka)
 
+### 🐛 Bug Fixes
+
+- Strip Zod-defaulted fields from required in tools&#x2F;list response ([#576](https://github.com/apify/apify-mcp-server/pull/576)) ([7a75815](https://github.com/apify/apify-mcp-server/commit/7a758156aecf9b9420a6d4e09cb54863c9de9513)) by [@jirispilka](https://github.com/jirispilka)
+
 
 <!-- git-cliff-unreleased-end -->
 ## [0.9.12](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.12) (2026-03-20)
