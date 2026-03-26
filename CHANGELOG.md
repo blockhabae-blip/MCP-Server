@@ -2,15 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.9.14 - **not yet released**
+## [0.9.14](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.14) (2026-03-26)
 
 ### 🐛 Bug Fixes
 
 - Update MCPB build process and manifest configuration ([#597](https://github.com/apify/apify-mcp-server/pull/597)) ([25fa8a2](https://github.com/apify/apify-mcp-server/commit/25fa8a2a9499a5a7a6a627f2f29a44cd4d6565b0)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.9.13](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.13) (2026-03-23)
 
 ### 🚀 Features
