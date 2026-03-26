@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+<!-- git-cliff-unreleased-start -->
+## 0.9.15 - **not yet released**
+
+### 🐛 Bug Fixes
+
+- Reorder search-actors params by importance: keywords first ([#610](https://github.com/apify/apify-mcp-server/pull/610)) ([7b7130c](https://github.com/apify/apify-mcp-server/commit/7b7130cc71d1206dbd51504c17ee6a4104a23f5e)) by [@MQ37](https://github.com/MQ37)
+- Remove console.error ([#611](https://github.com/apify/apify-mcp-server/pull/611)) ([31c5736](https://github.com/apify/apify-mcp-server/commit/31c57367bdab88d10f77994d620109726d4f3a6c)) by [@jirispilka](https://github.com/jirispilka)
+
+
+<!-- git-cliff-unreleased-end -->
 ## [0.9.14](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.14) (2026-03-26)
 
 ### 🐛 Bug Fixes
