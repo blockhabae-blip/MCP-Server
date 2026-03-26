@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.9.15 - **not yet released**
+## [0.9.15](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.15) (2026-03-26)
 
 ### 🐛 Bug Fixes
 
@@ -11,7 +10,6 @@ All notable changes to this project will be documented in this file.
 - Remove console.error ([#611](https://github.com/apify/apify-mcp-server/pull/611)) ([31c5736](https://github.com/apify/apify-mcp-server/commit/31c57367bdab88d10f77994d620109726d4f3a6c)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.9.14](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.14) (2026-03-26)
 
 ### 🐛 Bug Fixes
