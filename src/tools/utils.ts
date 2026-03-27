@@ -1,7 +1,12 @@
+import { createHash } from 'node:crypto';
+
 import type { ValidateFunction } from 'ajv';
 import type Ajv from 'ajv';
 
+import log from '@apify/log';
+
 import { ACTOR_ENUM_MAX_LENGTH, ACTOR_MAX_DESCRIPTION_LENGTH, RAG_WEB_BROWSER_WHITELISTED_FIELDS } from '../const.js';
+import { MAX_TOOL_NAME_LENGTH, TOOL_NAME_HASH_LENGTH } from '../mcp/const.js';
 import type { ActorInfo, ActorInputSchema, ActorInputSchemaProperties, SchemaProperties } from '../types.js';
 import {
     addGlobsProperties,
@@ -19,11 +24,33 @@ export function isActorInfoMcpServer(actorInfo: ActorInfo): boolean {
     return !!((actorInfo.webServerMcpPath && actorInfo.actor.actorStandby?.isEnabled));
 }
 
-export function actorNameToToolName(actorName: string): string {
-    return actorName
-        .replace(/\//g, '-slash-')
-        .replace(/\./g, '-dot-')
-        .slice(0, 64);
+export function actorNameToToolName(actorFullName: string): string {
+    const slashIndex = actorFullName.indexOf('/');
+    if (slashIndex === -1) {
+        log.warning(`Actor name "${actorFullName}" does not contain a slash — expected format "username/actor-name"`);
+    }
+
+    const username = slashIndex !== -1 ? actorFullName.slice(0, slashIndex) : '';
+    const actorName = slashIndex !== -1 ? actorFullName.slice(slashIndex + 1) : actorFullName;
+    const safeUsername = username.replace(/\./g, '-dot-');
+    const fullName = slashIndex !== -1 ? `${safeUsername}--${actorName}` : actorName;
+
+    if (fullName.length <= MAX_TOOL_NAME_LENGTH) {
+        return fullName;
+    }
+
+    // Truncate and add hash for uniqueness
+    const hash = createHash('sha256').update(actorFullName).digest('hex').slice(0, TOOL_NAME_HASH_LENGTH);
+    return `${fullName.slice(0, MAX_TOOL_NAME_LENGTH - TOOL_NAME_HASH_LENGTH - 1)}-${hash}`;
+}
+
+/**
+ * Converts a legacy tool name (apify-slash-rag-web-browser) to the current format (apify--rag-web-browser).
+ * Returns null if the name doesn't match the legacy pattern.
+ */
+export function legacyToolNameToNew(name: string): string | null {
+    if (!name.includes('-slash-')) return null;
+    return name.replace('-slash-', '--');
 }
 
 export function getToolSchemaID(actorName: string): string {
