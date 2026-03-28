@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-<!-- git-cliff-unreleased-start -->
-## 0.9.16 - **not yet released**
+## [0.9.16](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.16) (2026-03-28)
 
 ### 🚀 Features
 
@@ -16,7 +15,6 @@ All notable changes to this project will be documented in this file.
 - Read server version from package.json instead of hardcoded constant ([#600](https://github.com/apify/apify-mcp-server/pull/600)) ([0abad83](https://github.com/apify/apify-mcp-server/commit/0abad8395765328e3d8514482ec1e3de61049aa1)) by [@jirispilka](https://github.com/jirispilka)
 
 
-<!-- git-cliff-unreleased-end -->
 ## [0.9.15](https://github.com/apify/apify-mcp-server/releases/tag/v0.9.15) (2026-03-26)
 
 ### 🐛 Bug Fixes
