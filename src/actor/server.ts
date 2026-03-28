@@ -16,6 +16,7 @@ import { parseBooleanOrNull } from '@apify/utilities';
 
 import { ApifyClient } from '../apify_client.js';
 import { ActorsMcpServer } from '../mcp/server.js';
+import { resolvePaymentProvider } from '../payments/index.js';
 import type { ApifyRequestParams } from '../types.js';
 import { parseUiMode } from '../types.js';
 import { getHelpMessage, Routes, TransportType } from './const.js';
@@ -67,9 +68,8 @@ export function createExpressApp(
 
             const uiMode = parseUiMode(urlParams.get('ui')) ?? parseUiMode(process.env.UI_MODE);
 
-            // Extract payment mode parameter - if payment=skyfire, enable skyfire mode
-            const paymentParam = urlParams.get('payment');
-            const skyfireMode = paymentParam === 'skyfire';
+            // Resolve payment provider from URL parameter (e.g., ?payment=skyfire)
+            const paymentProvider = await resolvePaymentProvider(urlParams.get('payment'));
 
             const mcpServer = new ActorsMcpServer({
                 taskStore,
@@ -79,7 +79,7 @@ export function createExpressApp(
                     enabled: telemetryEnabled,
                 },
                 uiMode,
-                skyfireMode,
+                paymentProvider,
             });
             const transport = new SSEServerTransport(Routes.MESSAGE, res);
 
@@ -199,9 +199,8 @@ export function createExpressApp(
 
                 const uiMode = parseUiMode(urlParams.get('ui')) ?? parseUiMode(process.env.UI_MODE);
 
-                // Extract payment mode parameter - if payment=skyfire, enable skyfire mode
-                const paymentParam = urlParams.get('payment');
-                const skyfireMode = paymentParam === 'skyfire';
+                // Resolve payment provider from URL parameter (e.g., ?payment=skyfire)
+                const paymentProvider = await resolvePaymentProvider(urlParams.get('payment'));
 
                 const mcpServer = new ActorsMcpServer({
                     taskStore,
@@ -212,7 +211,7 @@ export function createExpressApp(
                         enabled: telemetryEnabled,
                     },
                     uiMode,
-                    skyfireMode,
+                    paymentProvider,
                 });
 
                 // Load MCP server tools
