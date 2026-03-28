@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 - Adopt dedent for multiline tool descriptions ([#609](https://github.com/apify/apify-mcp-server/pull/609)) ([f1f6a90](https://github.com/apify/apify-mcp-server/commit/f1f6a90ec7ccae3d7ec617a9a7c23a4956907359)) by [@jirispilka](https://github.com/jirispilka), closes [#197](https://github.com/apify/apify-mcp-server/issues/197), [#574](https://github.com/apify/apify-mcp-server/issues/574)
 - Rename actor tool names to {username}--{actor-name} format ([#593](https://github.com/apify/apify-mcp-server/pull/593)) ([6e003ec](https://github.com/apify/apify-mcp-server/commit/6e003ec041214fe8b5fdd1129a65ef5b16527c01)) by [@Copilot](https://github.com/Copilot), closes [#588](https://github.com/apify/apify-mcp-server/issues/588)
+- Introduce PaymentProvider interface and migrate Skyfire to provider pattern, add x402 payment provider ([#590](https://github.com/apify/apify-mcp-server/pull/590)) ([0aa3de1](https://github.com/apify/apify-mcp-server/commit/0aa3de19b77e6cf0da83de10d43bb1f725b1403c)) by [@MQ37](https://github.com/MQ37), closes [#150](https://github.com/apify/apify-mcp-server/issues/150)
 
 ### 🐛 Bug Fixes
 
