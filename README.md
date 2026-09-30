@@ -589,3 +589,5 @@ Full rules, including [AI-assisted contributions](./CONTRIBUTING.md#ai-assisted-
 - [How to build and monetize an AI agent on Apify](https://blog.apify.com/how-to-build-an-ai-agent/)
 - [Connect Apify MCP with Claude Desktop](https://docs.apify.com/platform/integrations/claude-desktop)
 - [Connect Apify MCP with ChatGPT](https://docs.apify.com/platform/integrations/chatgpt)
+
+** developed by Mattieu Blais**
